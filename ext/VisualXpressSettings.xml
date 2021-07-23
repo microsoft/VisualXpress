@@ -1,0 +1,118 @@
+<Settings>
+  <Menu Title="Tools">
+    <SubMenu Title="VisualXpress" InsertAfter="0">
+      <SystemCommand Title="Visual Studio Command Prompt Here..." FileName="cmd.exe" Arguments='/s /k ""$(VisualStudioInstallFolder)\Common7\Tools\VsDevCmd.bat" &amp;&amp; CD /D "$(ItemDir)""' Image="console.png" ShortcutKey="Global::Ctrl+K, Ctrl+R"/>
+      <SystemCommand Title="XboxOne XDK Command Prompt Here..." FileName="cmd.exe" Arguments='/s /k ""$(DurangoXDK)\xdk\DurangoVars.cmd" VS$(VisualStudioEditionYear) &amp;&amp; CD /D "$(ItemDir)""' Image="console.png" ShortcutKey="Global::Ctrl+K, Ctrl+X"/>
+      <SystemCommand Title="XboxOne GDK Command Prompt Here..." FileName="cmd.exe" Arguments='/s /k ""$(GameDK)\Command Prompts\GamingXboxVars.cmd" GamingXboxVS$(VisualStudioEditionYear) &amp;&amp; CD /D "$(ItemDir)""' Image="console.png" ShortcutKey="Global::Ctrl+K, Ctrl+G"/>
+      <Separator/>
+      <PluginCommand Title="Copy New Guid" Name="clipboard" Arguments='-copy -guid"'/>
+      <PluginCommand Title="Copy Uncoloured" Name="clipboard" Arguments="-copy -uncolour" ShortcutKey="Global::Ctrl+Shift+C"/>
+      <PluginCommand Title="Copy Unformatted" Name="clipboard" Arguments="-copy -unformat" ShortcutKey="Global::Ctrl+Alt+C"/>
+      <Separator/>
+      <PluginCommand Title="Open User Settings" Name="openfile" Arguments='-c "$(UserSettingsPath)"'/>
+      <PluginCommand Title="Open Global Settings" Name="openfile" Arguments="$(GlobalSettingsPath)"/>
+      <Separator/>
+      <PluginCommand Title="Build Startup Project(s)" Name="buildstartupprojects" ShortcutKey="Global::Ctrl+Shift+F7"/>
+      <Separator/>
+      <PluginCommand Title="Environment Variables..." Name="environment"/>
+      <PluginCommand Title="Display Macros" Name="macros"/>
+      <PluginCommand Title="Refresh" Name="refresh" Image="refresh.png"/>
+      <Separator/>
+      <PluginCommand Title="About" Name="about" Image="about.png"/>
+    </SubMenu>
+    <Separator InsertAfter="Extensions and Updates..."/>
+    <SubMenu Title="UE4">
+      <PluginCommand Title="Perforce - Diff vs UE4/4.12" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE4/Release-4.12/Engine/" "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
+      <PluginCommand Title="Perforce - Diff vs UE4/4.22" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE4/Release-4.22/Engine/" "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
+      <PluginCommand Title="Perforce - Diff vs UE4/4.26" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE4/Release-4.26/Engine/" "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
+      <PluginCommand Title="Perforce - Diff vs UE4/Main" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE4/Main/Engine/" -branch visualxpress_to_ue4_main "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
+      <Separator/>
+      <PluginCommand Title="Perforce - History in UE4/Main" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE4/Main/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
+      <PluginCommand Title="Perforce - Revision Graph in UE4/Main" Name="revgraph" Arguments='-search "^//.+?/Engine/" -replace "//UE4/Main/Engine/" "$(ItemPath)"' Image="revgraph.png" SaveAllDocs="true"/>
+      <PluginCommand Title="Perforce - Timelapse in UE4/Main" Name="timelapse" Arguments='-search "^//.+?/Engine/" -replace "//UE4/Main/Engine/" "$(ItemPath)"' Image="timelapse.png" SaveAllDocs="true"/>
+      <Separator/>
+      <PluginCommand Title="Perforce - Reconcile: UE4" Name="reconcile" Arguments="$(UnrealReconcilePaths)" Image="reconcile.png" SaveAllDocs="true"/>
+    </SubMenu>
+    <SubMenu Title="UE5">
+      <PluginCommand Title="Perforce - Diff vs UE5/Main" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" -branch visualxpress_to_ue5_main "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
+      <Separator/>
+      <PluginCommand Title="Perforce - History in UE5/Main" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE4/Main/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
+      <PluginCommand Title="Perforce - Revision Graph in UE5/Main" Name="revgraph" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" "$(ItemPath)"' Image="revgraph.png" SaveAllDocs="true"/>
+      <PluginCommand Title="Perforce - Timelapse in UE5/Main" Name="timelapse" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" "$(ItemPath)"' Image="timelapse.png" SaveAllDocs="true"/>
+      <Separator/>
+      <PluginCommand Title="Perforce - Reconcile: UE5" Name="reconcile" Arguments="$(UnrealReconcilePaths)" Image="reconcile.png" SaveAllDocs="true"/>
+    </SubMenu>
+    <Separator/>
+    <PluginCommand Title="Perforce - Connection" Name="connection"/>
+    <PluginCommand Title="Perforce - Check Ou&amp;t" Name="checkout" Arguments='"$(ItemPath)"' Image="checkout.png" ShowInContextMenus="true" ShowInToolbar="true" ShortcutKey="Global::Ctrl+`"/>
+    <PluginCommand Title="Perforce - Check Out Modified" Name="checkout" Arguments='-m' Image="checkout.png" ShortcutKey="Global::Ctrl+1"/>
+    <PluginCommand Title="Perforce - Revert" Name="revert" Arguments='-f "$(ItemPath)"' Image="revert.png" ShowInContextMenus="true" ShowInToolbar="true"/>
+    <PluginCommand Title="Perforce - File &amp;History" Name="history" Arguments='"$(ItemPath)"' Image="history.png" ShowInContextMenus="true" ShowInToolbar="true"/>
+    <PluginCommand Title="Perforce - &amp;Revision Graph" Name="revgraph" Arguments='"$(ItemPath)"' Image="revgraph.png" ShowInContextMenus="true" ShortcutKey="Global::Ctrl+Shift+R"/>
+    <PluginCommand Title="Perforce - Timelapse View" Name="timelapse" Arguments='"$(ItemPath)"' Image="timelapse.png" ShowInContextMenus="true"/>
+    <PluginCommand Title="Perforce - Diff Against Have Revision" Name="diffhave" Arguments='"$(ItemPath)"' Image="compare.png" SaveAllDocs="true" ShortcutKey="Global::Ctrl+D"/>
+    <SystemCommand Title="Perforce - Show in P4V" FileName="p4v.exe" Arguments='-p $(P4PORT) -u $(P4USER) -c $(P4CLIENT) -s "$(ItemPath)"' ShowInContextMenus="true"/>
+    <PluginCommand Title="Perforce - Reconcile" Name="reconcile" Arguments="$(ContextFolders)" Image="reconcile.png" SaveAllDocs="true" ShowInToolbar="true" ShowInContextMenus="true"/>
+    <PluginCommand Title="Copy Folder Path" Name="clipboard" Arguments='-copy "$(ItemDir)"' ShowInContextMenus="true" ShowInMainMenu="false" InsertAfter="Copy Full Path"/>
+    <PluginCommand Title="Copy Depot Path" Name="clipboard" Arguments='-copy -depotPath "$(ItemPath)"' ShowInContextMenus="true" ShowInMainMenu="false" InsertAfter="Copy Folder Path"/>
+  </Menu>
+  <PropertyGroup>
+    <Property Name="VisualXpressExtensionGallery">
+      file:\\contoso\studio\ipoint\VisualXpress\Gallery.atom
+    </Property>
+    <Property Name="P4IGNORE">
+      $(P4IGNORE)
+      \.user
+      \.ipch
+      \.opensdf
+      \.opendb
+      \.sdf
+      \.suo
+      \.psess
+      \.vspx
+      \.tmp
+      \.cache
+      \.cs\.dll
+      \.tmp_proj
+      \.bin
+      \.ncb
+      \\obj\\
+      \\Debug[^\\]*\\
+      \\Release[^\\]*\\
+      \\commands\.txt
+      \.tmp_proj
+      \.bin
+      \.ncb
+      \.nvf
+      \.VC\.db
+      \.AppxManifest
+      \\WorkingDirectory\\
+      \\intermediate\\
+      \\Cooked\\.*\.ini
+      \\Config\\.+_layout\.xml
+      \\Config\\.*UserSettings\.ini
+      \\Binaries[^\\]*\\
+      \\Programs\\.*\\bin\\[^\\]+\\
+      \\Build\\XboxOne\\
+      \\DerivedDataCache\\
+      \\Saved\\Autosaves\\
+      \\Saved\\Config\\
+      \\Saved\\Logs\\
+      \\Mac\\
+      \\\.vs\\
+      \.csproj\.References
+      \\HavokReflection\\
+      \\BuildGraph.Automation.xml
+    </Property>
+    <Property Name="UnrealReconcilePaths">
+      $(SolutionDir)\*Game\Source
+      $(SolutionDir)\*Game\Config
+      $(SolutionDir)\Engine\Config
+      $(SolutionDir)\Engine\Plugins
+      $(SolutionDir)\Engine\Source\Developer
+      $(SolutionDir)\Engine\Source\Editor
+      $(SolutionDir)\Engine\Source\Programs
+      $(SolutionDir)\Engine\Source\Runtime
+    </Property>
+  </PropertyGroup>
+</Settings>

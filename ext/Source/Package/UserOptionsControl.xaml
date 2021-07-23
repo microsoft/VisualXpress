@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Microsoft.VisualXpress.UserOptionsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Width="407.893" Height="250">
+    <Grid>
+        <StackPanel>
+            <Grid Margin="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="VisualXpress:" VerticalAlignment="Center" Padding="0,0,5,0" Grid.Column="0"/>
+                <Separator BorderBrush="Black" BorderThickness="0.5" HorizontalAlignment="Stretch" Height="0.5" VerticalAlignment="Center" Width="Auto" Grid.Column="1"/>
+            </Grid>
+            <CheckBox x:Name="m_CheckBoxActivateOutputWindow" Content="Always activate output window to show command" Margin="0,15,0,0"/>
+            <CheckBox x:Name="m_CheckBoxUseSolutionSymbolSettings" Content="Preserve debugger symbol settings with solution" Margin="0,5,0,0"/>
+            <CheckBox x:Name="m_CheckBoxVerboseLogging" Content="Write additional verbose logging to output panel" Margin="0,5,0,0"/>
+            <CheckBox x:Name="m_CheckBoxAutoCheckout" Content="Automatically check out files on save" Margin="0,5,0,0"/>
+            <Label Content="Current Perforce Connection:" VerticalAlignment="Center" Grid.Column="0" Margin="0,30,0,0" Padding="0"/>
+            <Grid Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox x:Name="m_ComboBoxConnections" Height="24" Margin="0,0,0,0" Grid.Column="0"/>
+                <Button Content="Create New..." Width="80" Height="24" HorizontalAlignment="Right" Margin="5,0,0,0" Padding="4,1" Click="OnClickCreateNewConnection" Grid.Column="1"/>
+            </Grid>
+        </StackPanel>
+        <Button Content="About..." HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="Auto" Height="24" Padding="20,1" Click="OnClickAbout"/>
+    </Grid>
+</UserControl>

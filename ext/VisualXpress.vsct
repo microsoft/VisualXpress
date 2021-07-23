@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!--  This is the file that defines the actual layout and type of the commands.
+        It is divided in different sections (e.g. command definition, command
+        placement, ...), with each defining a specific set of properties.
+        See the comment before each section for more details about how to
+        use it. -->
+
+  <!--  The VSCT compiler (the tool that translates this file into the binary 
+        format that VisualStudio will consume) has the ability to run a preprocessor 
+        on the vsct file; this preprocessor is (usually) the C++ preprocessor, so 
+        it is possible to define includes and macros with the same syntax used 
+        in C++ files. Using this ability of the compiler here, we include some files 
+        defining some of the constants that we will use inside the file. -->
+
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+
+
+  <Commands package="guidVisualXpressPkg">
+
+    <Menus>
+      <Menu guid="guidVisualXpressCmdSet" id="cmdidVisualXpressToolbar" priority="0x0000" type="Toolbar">
+        <CommandFlag>DefaultDocked</CommandFlag> 
+        <CommandFlag>AlwaysCreate</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>VisualXpress</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Groups>
+      <Group guid="guidVisualXpressCmdSet" id="cmdidVisualXpressCmdGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+      </Group>
+    </Groups>
+
+    <!--
+	  # Python script to generate KeyBinding* button elements
+		count = 16
+    print('    <Buttons>')
+		for i in range(count):
+			print('      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding%02d">' % i)
+			print('        <CommandFlag>CommandWellOnly</CommandFlag>')
+			print('        <Strings>')
+			print('          <CommandName>cmdidVisualXpressKeyBinding%02d</CommandName>' % i)
+			print('          <ButtonText>VisualXpress KeyBinding%02d</ButtonText>' % i)
+			print('          <CanonicalName>VisualXpress.KeyBinding%02d</CanonicalName>' % i)
+			print('          <LocCanonicalName>VisualXpress.KeyBinding%02d</LocCanonicalName>' % i)
+			print('        </Strings>')
+			print('      </Button>')
+    print('    </Buttons>')
+    
+		for i in range(count):
+			print('    <IDSymbol name="cmdidVisualXpressKeyBinding%02d" value="%d" />' % (i, i))
+	-->
+    
+    <Buttons>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding00">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding00</CommandName>
+          <ButtonText>VisualXpress KeyBinding00</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding00</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding00</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding01">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding01</CommandName>
+          <ButtonText>VisualXpress KeyBinding01</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding01</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding01</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding02">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding02</CommandName>
+          <ButtonText>VisualXpress KeyBinding02</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding02</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding02</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding03">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding03</CommandName>
+          <ButtonText>VisualXpress KeyBinding03</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding03</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding03</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding04">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding04</CommandName>
+          <ButtonText>VisualXpress KeyBinding04</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding04</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding04</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding05">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding05</CommandName>
+          <ButtonText>VisualXpress KeyBinding05</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding05</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding05</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding06">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding06</CommandName>
+          <ButtonText>VisualXpress KeyBinding06</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding06</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding06</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding07">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding07</CommandName>
+          <ButtonText>VisualXpress KeyBinding07</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding07</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding07</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding08">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding08</CommandName>
+          <ButtonText>VisualXpress KeyBinding08</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding08</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding08</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding09">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding09</CommandName>
+          <ButtonText>VisualXpress KeyBinding09</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding09</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding09</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding10">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding10</CommandName>
+          <ButtonText>VisualXpress KeyBinding10</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding10</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding10</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding11">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding11</CommandName>
+          <ButtonText>VisualXpress KeyBinding11</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding11</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding11</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding12">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding12</CommandName>
+          <ButtonText>VisualXpress KeyBinding12</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding12</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding12</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding13">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding13</CommandName>
+          <ButtonText>VisualXpress KeyBinding13</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding13</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding13</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding14">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding14</CommandName>
+          <ButtonText>VisualXpress KeyBinding14</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding14</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding14</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding15">
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <CommandName>cmdidVisualXpressKeyBinding15</CommandName>
+          <ButtonText>VisualXpress KeyBinding15</ButtonText>
+          <CanonicalName>VisualXpress.KeyBinding15</CanonicalName>
+          <LocCanonicalName>VisualXpress.KeyBinding15</LocCanonicalName>
+        </Strings>
+      </Button>
+    </Buttons>
+
+  </Commands>
+
+  <CommandPlacements>
+    <CommandPlacement guid="guidVisualXpressCmdSet" id="cmdidVisualXpressCmdGroup" priority="0x0100">
+      <Parent guid="guidVisualXpressCmdSet" id="cmdidVisualXpressToolbar"/>
+    </CommandPlacement>
+  </CommandPlacements>
+
+  <VisibilityConstraints>
+    <VisibilityItem guid="guidVisualXpressCmdSet" id="cmdidVisualXpressToolbar" context="UICONTEXT_EmptySolution"/>
+    <VisibilityItem guid="guidVisualXpressCmdSet" id="cmdidVisualXpressToolbar" context="UICONTEXT_SolutionExists"/>
+    <VisibilityItem guid="guidVisualXpressCmdSet" id="cmdidVisualXpressToolbar" context="UICONTEXT_NoSolution"/>
+  </VisibilityConstraints>
+
+  <Symbols>
+    <GuidSymbol name="guidVisualXpressPkg" value="{87cfaa4e-e594-4b22-a745-f8dd9be5038b}"/>
+    <GuidSymbol name="guidVisualXpressCmdSet" value="{52400462-6dad-47d9-9433-b59f1f0ec889}">
+      <IDSymbol name="cmdidVisualXpressCmdGroup" value="0x1000" />
+      <IDSymbol name="cmdidVisualXpressToolbar" value="0x1001" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding00" value="0" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding01" value="1" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding02" value="2" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding03" value="3" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding04" value="4" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding05" value="5" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding06" value="6" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding07" value="7" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding08" value="8" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding09" value="9" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding10" value="10" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding11" value="11" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding12" value="12" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding13" value="13" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding14" value="14" />
+      <IDSymbol name="cmdidVisualXpressKeyBinding15" value="15" />
+    </GuidSymbol>
+  </Symbols>
+
+</CommandTable>

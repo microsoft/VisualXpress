@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">
+  </title>
+  <entry>
+    <title type="text">VisualXpress</title>
+    <summary type="text">Microsoft VisualXpress Extension</summary>
+    <author>
+      <name>Microsoft</name>
+    </author>
+    <category term="VisualXpress" />
+    <content type="application/octet-stream" src="VisualXpress.vsix" />
+    <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/developer/vsx-syndication-schema/2010">
+      <Id>87cfaa4e-e594-4b22-a745-f8dd9be5038b</Id>
+      <Version></Version>
+    </Vsix>
+  </entry>
+</feed>

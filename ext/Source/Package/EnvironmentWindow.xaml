@@ -1,0 +1,67 @@
+﻿<Window x:Class="Microsoft.VisualXpress.EnvironmentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.14.0"
+        Title="VisualXpress Environment" WindowStyle="ToolWindow" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowBackgroundKey}}"
+        TextOptions.TextFormattingMode="Display" 
+        TextOptions.TextHintingMode="Fixed"
+        Width="650" Height="650" ShowInTaskbar="False" Topmost="True" >
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowTextKey}}" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Background" Value="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowContentTabGradientEndKey}}" />
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowTextKey}}" />
+                <Setter Property="Height" Value="22" />
+            </Style>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Height" Value="25" />
+                <Setter Property="Width" Value="75" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowBackgroundKey}}" Margin="5" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="65" />
+            <ColumnDefinition/>
+            <ColumnDefinition Width="88"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,5" TextWrapping="Wrap" Text="Process Environment Variables" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <ListView Name="m_ListView" ItemsSource="{Binding Items}" Margin="0,5,0,5" SizeChanged="OnListViewSizeChanged" MouseDoubleClick="OnListViewMouseDoubleClick" SelectionChanged="OnListViewSelectionChanged" Grid.Row="1" Grid.ColumnSpan="2" SelectionMode="Single">
+            <ListView.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static vsfx:VsBrushes.WindowTextKey}}" />
+                    <Setter Property="Foreground" Value="LightGray" />
+                </Style>
+                <DataTemplate x:Key="ItemNameTemplate">
+                    <TextBlock Text="{Binding Path=Name}" Width="Auto" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Stretch"/>
+                </DataTemplate>
+                <DataTemplate x:Key="ItemValueTemplate">
+                    <TextBlock Text="{Binding Path=Value}" Width="Auto" VerticalAlignment="Center" Background="Transparent" HorizontalAlignment="Stretch"/>
+                </DataTemplate>
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="192" Header="Name" CellTemplate="{StaticResource ItemNameTemplate}"/>
+                    <GridViewColumn Width="Auto" Header="Value" CellTemplate="{StaticResource ItemValueTemplate}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Add..." Name="m_ButtonAdd" HorizontalAlignment="Right" Margin="5,5,5,5" VerticalAlignment="Top" Click="OnClickButtonAdd" Grid.Row="1" Grid.Column="3"/>
+        <Button Content="Edit..." Name="m_ButtonEdit" HorizontalAlignment="Right" Margin="5,35,5,5" VerticalAlignment="Top" Click="OnClickButtonEdit" Grid.Row="1" Grid.Column="3" IsEnabled="False"/>
+        <Button Content="Delete" Name="m_ButtonDelete" HorizontalAlignment="Right" Margin="5,65,5,5" VerticalAlignment="Top" Click="OnClickButtonDelete" Grid.Row="1" Grid.Column="3" IsEnabled="False"/>
+        <Button Content="Close" Name="m_ButtonClose" HorizontalAlignment="Right" Margin="5,0,5,5" VerticalAlignment="Bottom" Click="OnClickButtonClose" Grid.Row="2" Grid.Column="3" IsDefault="True" />
+    </Grid>
+</Window>

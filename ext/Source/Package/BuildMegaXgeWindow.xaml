@@ -1,0 +1,160 @@
+﻿<Window x:Class="Microsoft.VisualXpress.BuildMegaXgeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vsfx="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.14.0"
+        xmlns:local="clr-namespace:Microsoft.VisualXpress"
+        mc:Ignorable="d"
+        Title="Build MegaXGE" Height="400" Width="760" ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        TextOptions.TextFormattingMode="Display" 
+        TextOptions.TextHintingMode="Fixed"
+        Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowBackgroundKey}}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowTextKey}}" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Background" Value="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowContentTabGradientEndKey}}" />
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowTextKey}}" />
+            </Style>
+            <Style TargetType="{x:Type ComboBox}">
+                <Style.Resources>
+                    <DataTemplate x:Key="DefaultTemplate" >
+                        <Grid>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Value}"/>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate x:Key="MultiSelectTemplate">
+                        <Grid>
+                            <CheckBox VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding IsSelected}">
+                                <TextBlock Text="{Binding Value}"/>
+                            </CheckBox>
+                        </Grid>
+                    </DataTemplate>
+                    <local:MultiSelectTemplateSelector x:Key="MultiSelectTemplateSelector" 
+                                                 DefaultTemplate="{StaticResource DefaultTemplate}"
+                                                 MultiSelectTemplate="{StaticResource MultiSelectTemplate}" />
+                </Style.Resources>
+                <Setter Property="ItemsSource" Value="{Binding Values}"/>
+                <Setter Property="SelectedItem" Value="{Binding SelectedValue}"/>
+                <Setter Property="IsTextSearchEnabled" Value="False"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="IsTextSearchEnabled" Value="False"/>
+                <Setter Property="ItemTemplateSelector" Value="{StaticResource MultiSelectTemplateSelector}"/>
+                <Setter Property="local:SelectedItemTemplateBehavior.SelectedItemDataTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Grid DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}">
+                                <TextBlock Text="{Binding DisplayValue}"
+                                   TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Width" Value="123"/>
+                <Setter Property="Height" Value="24"/>
+                <Setter Property="Background" Value="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowContentTabGradientEndKey}}" />
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderThickness="1" BorderBrush="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowBorderKey}}" Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource {x:Static vsfx:VsBrushes.CommandBarMouseOverBackgroundGradientKey}}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="12" Background="{DynamicResource {x:Static vsfx:VsBrushes.ToolWindowBackgroundKey}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Choose the MegaXGE targets to build:" Margin="0,0,0,6"></TextBlock>
+        <Grid Grid.Row="1">
+            <DataGrid ItemsSource="{Binding Targets}"
+                      AutoGenerateColumns="False" 
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="True"
+                      CanUserResizeRows="False"
+                      CanUserSortColumns="False"
+                      CanUserAddRows="False" 
+                      HeadersVisibility="Column" 
+                      SelectionMode="Extended"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      Width="Auto">
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Target" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Id}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Mode">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox DataContext="{Binding Mode}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Platforms">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox DataContext="{Binding Platforms}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Configurations">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox DataContext="{Binding Configurations}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="12,0,0,0">
+            <Button Command="{Binding BuildCommand}">
+                <TextBlock Text="Build" />
+            </Button>
+            <Button Command="{Binding AddNewCommand}" Margin="0,50,0,0">
+                <TextBlock Text="Add New" />
+            </Button>
+            <Button Command="{Binding RemoveSelectedCommand}" Margin="0,12,0,0">
+                <TextBlock Text="Remove Selected" />
+            </Button>
+        </StackPanel>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+            <Button Command="{x:Static local:WpfCommands.CloseCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                    Margin="0,12,0,0" HorizontalAlignment="Right">
+                <TextBlock Text="Close" />
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
