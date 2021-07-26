@@ -60,7 +60,7 @@ VisualXpress is a Visual Studio extension used easily integrate external tools i
 
 # Development
 	
-* VisualXpress was originally created by jessk@microsoft.com. Since then, many people have also participated in the development. Anyone interested is encouraged to help out!
+* VisualXpress was originally created by [@jessk-msft](https://github.com/jessk-msft). Since then, many people have also participated in the development. Anyone interested is encouraged to help out!
 
 * It's easy to get started developing new features if you'd like!
 
