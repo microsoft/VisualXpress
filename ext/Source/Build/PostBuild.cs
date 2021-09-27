@@ -1,4 +1,5 @@
-// Copyright Microsoft Corp. All Rights Reserved.
+// Copyright Microsoft Corporation. All Rights Reserved.
+
 using System;
 using System.Xml;
 using System.IO;
