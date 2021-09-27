@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+  <PropertyGroup>
+    <Property Name="P4USER[0]">YOUR_TEST_P4USER</Property>
+    <Property Name="P4PORT[0]">YOUR_TEST_P4PORT</Property>
+    <Property Name="P4CLIENT[0]">YOUR_TEST_P4CLIENT_OR_EMPTY</Property>
+  </PropertyGroup>
+</Settings>

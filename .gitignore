@@ -22,6 +22,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 intermediate/
+int/
 
 # Cached NuGet packages
 packages/

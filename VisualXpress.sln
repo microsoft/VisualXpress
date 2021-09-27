@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualXpress", "ext\VisualXpress.csproj", "{DC5A3BB5-874D-4A6D-BD9A-825392EB4E62}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualXpress.UnitTest", "test\VisualXpress.UnitTest.csproj", "{70CCF7C0-0973-4D13-81E6-10628D8DCA97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{DC5A3BB5-874D-4A6D-BD9A-825392EB4E62}.Release-Install|Any CPU.Build.0 = Release-Install|Any CPU
 		{DC5A3BB5-874D-4A6D-BD9A-825392EB4E62}.Release-Update|Any CPU.ActiveCfg = Release-Update|Any CPU
 		{DC5A3BB5-874D-4A6D-BD9A-825392EB4E62}.Release-Update|Any CPU.Build.0 = Release-Update|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Debug-Install|Any CPU.ActiveCfg = Debug|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Debug-Install|Any CPU.Build.0 = Debug|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Debug-Update|Any CPU.ActiveCfg = Debug|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Debug-Update|Any CPU.Build.0 = Debug|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Release-Install|Any CPU.ActiveCfg = Release|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Release-Install|Any CPU.Build.0 = Release|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Release-Update|Any CPU.ActiveCfg = Release|Any CPU
+		{70CCF7C0-0973-4D13-81E6-10628D8DCA97}.Release-Update|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

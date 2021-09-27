@@ -3,7 +3,7 @@ using System;
 
 namespace Microsoft.VisualXpress
 {
-	static class Properties
+	public static class Properties
 	{
 		public const string ItemPath = "ItemPath";
 		public const string ItemPaths = "ItemPaths";
@@ -40,6 +40,7 @@ namespace Microsoft.VisualXpress
 		public const string P4HOST = "P4HOST";
 		public const string P4PORT = "P4PORT";
 		public const string P4CLIENT = "P4CLIENT";
+		public const string P4CONFIG = "P4CONFIG";
 
 		public const string VisualStudioDevEnvPath = "VisualStudioDevEnvPath";
 		public const string VisualStudioDevEnvFolder = "VisualStudioDevEnvFolder";

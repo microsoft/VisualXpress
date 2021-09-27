@@ -21,7 +21,7 @@
     <AssemblyName>VisualXpress</AssemblyName>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DeployExtension>False</DeployExtension>
@@ -29,6 +29,9 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>..\int\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -37,6 +40,9 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Install|AnyCPU'">
+    <OutputPath>..\int\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -45,6 +51,9 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Update|AnyCPU'">
+    <OutputPath>..\int\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -53,6 +62,9 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\int\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
     <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -60,6 +72,9 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Install|AnyCPU'">
+    <OutputPath>..\int\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
     <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -67,6 +82,9 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Update|AnyCPU'">
+    <OutputPath>..\int\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
     <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -85,7 +103,6 @@
     </Reference>
     <Reference Include="Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     </Reference>
-    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -274,25 +291,25 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Debugger.Interop">
-      <Version>8.0.50728</Version>
+      <Version>8.0.50729</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Debugger.Interop.10.0">
-      <Version>10.0.30320</Version>
+      <Version>10.0.30321</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Debugger.Interop.12.0">
-      <Version>12.0.21006</Version>
+      <Version>12.0.21007</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Debugger.Interop.14.0">
-      <Version>14.3.25408</Version>
+      <Version>14.3.25409</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Debugger.Interop.15.0">
-      <Version>15.5.27130</Version>
+      <Version>15.9.28308</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Imaging">
-      <Version>15.0.26606</Version>
+      <Version>15.9.28307</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK.EmbedInteropTypes">
-      <Version>15.0.12</Version>
+      <Version>15.0.36</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Setup.Configuration.Interop">
       <Version>1.16.30</Version>
@@ -300,29 +317,32 @@
       <PrivateAssets>all</PrivateAssets>
       <GeneratePathProperty>true</GeneratePathProperty>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Shell.14.0">
-      <Version>14.3.25407</Version>
+    <PackageReference Include="Microsoft.VisualStudio.Shell.15.0">
+      <Version>15.9.28307</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Design">
-      <Version>15.0.26606</Version>
+      <Version>15.9.28307</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Shell.Framework">
+      <Version>15.9.28307</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Immutable.10.0">
-      <Version>15.0.25414</Version>
+      <Version>15.0.25415</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Immutable.11.0">
-      <Version>15.0.25414</Version>
+      <Version>15.0.25415</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Immutable.12.0">
-      <Version>15.0.25414</Version>
+      <Version>15.0.25415</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Immutable.14.0">
-      <Version>15.0.25404</Version>
+      <Version>15.0.25405</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Interop.11.0">
       <Version>11.0.61031</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Interop.12.0">
-      <Version>12.0.30110</Version>
+      <Version>12.0.30111</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Threading">
       <Version>15.8.209</Version>
@@ -354,7 +374,7 @@
       <PostBuildReferenceFiles Include="$(PkgMicrosoft_VisualStudio_Setup_Configuration_Interop)\lib\net35\Microsoft.VisualStudio.Setup.Configuration.Interop.dll" />
     </ItemGroup>
     <PropertyGroup>
-      <PostBuildDeployDir>$(ProjectDir)bin\Deploy</PostBuildDeployDir>
+      <PostBuildDeployDir>$([System.IO.Path]::GetFullPath($(ProjectDir)$(OutDir)\..\..\Deploy))</PostBuildDeployDir>
       <PostBuildExecCommand>"$(ProjectDir)$(OutDir)VisualXpress.PostBuild.exe" "$(TargetName)" "$(Configuration)" "$(ProjectDir)" "$(ProjectDir)$(OutDir)" "$(VsInstallRoot)\Common7\IDE" "$(PostBuildDeployDir)"</PostBuildExecCommand>
     </PropertyGroup>
     <CSC OutputAssembly="$(ProjectDir)$(OutDir)VisualXpress.PostBuild.exe" Sources="$(ProjectDir)\Source\Build\PostBuild.cs" EmitDebugInformation="true" AdditionalLibPaths="@(PostBuildReferenceFiles->'%(RootDir)%(Directory)')" References="@(PostBuildReferenceFiles->'%(Filename)%(Extension)')" />

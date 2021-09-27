@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="87cfaa4e-e594-4b22-a745-f8dd9be5038b" Version="2.10.0" Language="en-US" Publisher="Microsoft" />
+        <Identity Id="87cfaa4e-e594-4b22-a745-f8dd9be5038b" Version="2.10.1" Language="en-US" Publisher="Microsoft" />
         <DisplayName>VisualXpress</DisplayName>
         <Description xml:space="preserve">VisualXpress Visual Studio Extension</Description>
         <Icon>Resources\visualxpress.ico</Icon>

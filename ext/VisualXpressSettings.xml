@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Settings>
   <Menu Title="Tools">
     <SubMenu Title="VisualXpress" InsertAfter="0">
@@ -24,7 +25,7 @@
     <SubMenu Title="UE4">
       <PluginCommand Title="Perforce - Diff vs UE4/4.12" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE4/Release-4.12/Engine/" "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
       <PluginCommand Title="Perforce - Diff vs UE4/4.22" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE4/Release-4.22/Engine/" "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
-      <PluginCommand Title="Perforce - Diff vs UE4/4.26" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE4/Release-4.26/Engine/" "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
+      <PluginCommand Title="Perforce - Diff vs UE4/4.27" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE4/Release-4.27/Engine/" "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
       <PluginCommand Title="Perforce - Diff vs UE4/Main" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE4/Main/Engine/" -branch visualxpress_to_ue4_main "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
       <Separator/>
       <PluginCommand Title="Perforce - History in UE4/Main" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE4/Main/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
@@ -36,7 +37,7 @@
     <SubMenu Title="UE5">
       <PluginCommand Title="Perforce - Diff vs UE5/Main" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" -branch visualxpress_to_ue5_main "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
       <Separator/>
-      <PluginCommand Title="Perforce - History in UE5/Main" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE4/Main/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
+      <PluginCommand Title="Perforce - History in UE5/Main" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
       <PluginCommand Title="Perforce - Revision Graph in UE5/Main" Name="revgraph" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" "$(ItemPath)"' Image="revgraph.png" SaveAllDocs="true"/>
       <PluginCommand Title="Perforce - Timelapse in UE5/Main" Name="timelapse" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" "$(ItemPath)"' Image="timelapse.png" SaveAllDocs="true"/>
       <Separator/>

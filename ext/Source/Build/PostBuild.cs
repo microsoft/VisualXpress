@@ -46,7 +46,7 @@ namespace Microsoft.VisualXpress.PostBuild
 
 				if (DoUpdate)
 				{
-					string[] vsVersions = {"14.0", "15.0", "16.0"};
+					string[] vsVersions = {"15.0", "16.0"};
 					foreach (string vsVersion in vsVersions)
 					{
 						bool doUpdateConfiguration = false;

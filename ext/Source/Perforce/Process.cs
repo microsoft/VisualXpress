@@ -352,7 +352,9 @@ namespace Microsoft.VisualXpress.Perforce
 
 		public static Config Connection(Config config = null)
 		{
-			Config currentConfig = NormalizeConnection(Info(config).Config);
+			Config currentConfig = new Config(config);
+			currentConfig.InheritConnection(Execute<SetResult>("set").Config);
+			currentConfig.InheritConnection(NormalizeConnection(Info(config).Config));
 			currentConfig.ApplyConnection(config ?? GlobalConfig);
 			return currentConfig;
 		}
@@ -362,7 +364,7 @@ namespace Microsoft.VisualXpress.Perforce
 			try
 			{
 				Config result = new Config(config);
-				Config enviro = Execute<SetResult>("set", config: config).Config;
+				Config enviro = Execute<SetResult>("set").Config;
 				if (String.IsNullOrEmpty(enviro.Port) == false && result.PortNumber == enviro.PortNumber)
 				{
 					string resultAddr = result.PortAddress;
@@ -654,15 +656,31 @@ namespace Microsoft.VisualXpress.Perforce
 				Client = config.Client;
 		}
 
+		public void InheritConnection(Config config)
+		{
+			if (config == null)
+				return;
+			if (String.IsNullOrEmpty(Port) && String.IsNullOrEmpty(config.Port) == false)
+				Port = config.Port;
+			if (String.IsNullOrEmpty(User) && String.IsNullOrEmpty(config.User) == false)
+				User = config.User;
+			if (String.IsNullOrEmpty(Client) && String.IsNullOrEmpty(config.Client) == false)
+				Client = config.Client;
+		}
+
 		public string PortAddress
 		{
 			get
 			{
 				try
 				{
-					IEnumerable<IPAddress> addrs = Dns.GetHostAddresses(this.PortName).Where(addr => addr != null && addr.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
-					if (addrs.Any())
-						return addrs.First().ToString();
+					string portName = this.PortName;
+					if (String.IsNullOrEmpty(portName) == false)
+					{
+						IEnumerable<IPAddress> addrs = Dns.GetHostAddresses(this.PortName).Where(addr => addr != null && addr.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
+						if (addrs.Any())
+							return addrs.First().ToString();
+					}
 				}
 				catch {}
 				return "";
@@ -671,20 +689,12 @@ namespace Microsoft.VisualXpress.Perforce
 
 		public string PortName
 		{
-			get
-			{
-				string[] tokens = (Port ?? "").Split(new char[]{':'}, StringSplitOptions.RemoveEmptyEntries);
-				return (tokens.Length > 0 ? tokens[0] : "");
-			}
+			get { return Endpoint.Parse(Port).PortName; }
 		}
 
 		public string PortNumber
 		{
-			get
-			{
-				string[] tokens = (Port ?? "").Split(new char[]{':'}, StringSplitOptions.RemoveEmptyEntries);
-				return (tokens.Length > 1 ? tokens[1] : "");
-			}
+			get { return Endpoint.Parse(Port).PortNumber; }
 		}
 	}
 
@@ -752,50 +762,6 @@ namespace Microsoft.VisualXpress.Perforce
 		}
 	}
 
-	public sealed class TempFile : IDisposable
-	{
-		public TempFile(IEnumerable<string> lines = null)
-		{
-			this.Path = System.IO.Path.GetFullPath(System.IO.Path.GetTempFileName());
-			if (lines != null)
-			{
-				using (var stream = new System.IO.StreamWriter(this.Path))
-				{
-					foreach (var line in lines)
-						stream.WriteLine(line);
-				}
-			}
-		}
-
-		public TempFile(TempFile rhs)
-		{
-			this.Path = rhs.Path;
-			rhs.Path = null;
-		}
-
-		public void Dispose()
-		{
-			try 
-			{ 
-				if (System.IO.File.Exists(this.Path))
-				{
-					System.IO.File.SetAttributes(this.Path, System.IO.FileAttributes.Normal);
-					System.IO.File.Delete(this.Path);
-				}
-			}
-			catch
-			{
-				Log.Error("Failed to delete file: {0}", this.Path);
-			}
-		}
-
-		public string Path
-		{
-			get;
-			private set;
-		}
-	}
-
 	public enum OutputChannel
 	{
 		StdOut,
@@ -810,6 +776,26 @@ namespace Microsoft.VisualXpress.Perforce
 		public override string ToString()
 		{
 			return String.Format("{0}: {1}", Channel, Text);
+		}
+	}
+
+	public struct Endpoint
+	{
+		public string Scheme;
+		public string PortName;
+		public string PortNumber;
+
+		public static Endpoint Parse(string port)
+		{
+			Endpoint result = new Endpoint{ Scheme="", PortName="", PortNumber="" };
+			Match m = Regex.Match(port ?? "", @"^((?<scheme>\w+):)?(?<name>[^:]+)(:(?<number>\d+))?$");
+			if (m.Success)
+			{
+				result.Scheme = m.Groups["scheme"].Value ?? "";
+				result.PortName = m.Groups["name"].Value ?? "";
+				result.PortNumber = m.Groups["number"].Value ?? "";
+			}
+			return result;
 		}
 	}
 }

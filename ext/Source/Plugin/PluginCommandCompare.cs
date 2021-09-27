@@ -261,7 +261,7 @@ namespace Microsoft.VisualXpress
 		{
 			public string LocalPath { get; private set; }
 			public string DisplayPath { get; private set; }
-			public Perforce.TempFile TempFile { get; private set; }
+			public TempFile TempFile { get; private set; }
 		
 			public static CompareFileInfo Create(string filePath, bool local)
 			{
@@ -280,13 +280,13 @@ namespace Microsoft.VisualXpress
 					return new CompareFileInfo { LocalPath = clientFilePath };
 				}
 
-				using (Perforce.TempFile tmp = new Perforce.TempFile())
+				using (TempFile tmp = new TempFile())
 				{
-					Perforce.PrintResult print = Perforce.Process.Execute<Perforce.PrintResult>(String.Format("print -q -o \"{0}\"", tmp.Path), filePath);
+					Perforce.PrintResult print = Perforce.Process.Execute<Perforce.PrintResult>(String.Format("print -q -o \"{0}\"", tmp.FilePath), filePath);
 					if (print.Success == false)
 						return null;
 
-					CompareFileInfo info = new CompareFileInfo { LocalPath = tmp.Path, DisplayPath = filePath, TempFile = new Perforce.TempFile(tmp) };
+					CompareFileInfo info = new CompareFileInfo { LocalPath = tmp.FilePath, DisplayPath = filePath, TempFile = new TempFile(tmp) };
 					return info;
 				}
 			}

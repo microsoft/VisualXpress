@@ -94,9 +94,9 @@ namespace Microsoft.VisualXpress
 			}
 			else
 			{
-				using (Perforce.TempFile ignoreFile = new Perforce.TempFile(ignorePatterns))
+				using (TempFile ignoreFile = new TempFile(ignorePatterns))
 				{
-					config.Ignore = ignoreFile.Path;
+					config.Ignore = ignoreFile.FilePath;
 					Perforce.Process.Execute(String.Format("reconcile {0}", args), paths, Perforce.ProcessFlags.Echo, config);
 				}
 			}

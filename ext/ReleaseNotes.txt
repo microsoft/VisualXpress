@@ -1,5 +1,11 @@
 VisualXpress Release Notes
 
+[Version 2.10.1]
+* Fixing bug connecting to a Perforce server over SSL
+* Updating to .NET Framework 4.7.2 for long path support by default
+* Updating VSSDK packages to latest VS 2017
+* Addition of VisualXpress.UnitTest project with a couple simple new tests
+
 [Version 2.10.0]
 * Initial open source release to GitHub [https://github.com/microsoft/VisualXpress]
 * Migrating Nuget packages.config to PackageReference

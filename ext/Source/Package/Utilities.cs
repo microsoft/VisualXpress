@@ -7,55 +7,55 @@ using System.Collections.Generic;
 
 namespace Microsoft.VisualXpress
 {
-	static class Utilities
+	public static class Utilities
 	{
-        public static void DeleteFile(string filePath, bool echo = false)
-        {
-            if (File.Exists(filePath) == true)
-            {
+		public static void DeleteFile(string filePath, bool echo = false)
+		{
+			if (File.Exists(filePath) == true)
+			{
 				if (echo)
 					Log.Info("DeleteFile: {0}", filePath);
 
-                File.SetAttributes(filePath, FileAttributes.Normal);
-                File.Delete(filePath);
-            }
-        }
+				File.SetAttributes(filePath, FileAttributes.Normal);
+				File.Delete(filePath);
+			}
+		}
 
-        public static void DeleteFiles(string folderPath, string filePattern, bool echo = false)
-        {
-            if (Directory.Exists(folderPath))
-            {
+		public static void DeleteFiles(string folderPath, string filePattern, bool echo = false)
+		{
+			if (Directory.Exists(folderPath))
+			{
 				if (echo)
 					Log.Info("DeleteFiles: {0}\\{1}", folderPath, filePattern);
 
-                foreach (var filePath in Directory.GetFiles(folderPath, filePattern, SearchOption.TopDirectoryOnly))
-                {
-                    File.SetAttributes(filePath, FileAttributes.Normal);
-                    File.Delete(filePath);
-                }
-            }
-        }
+				foreach (var filePath in Directory.GetFiles(folderPath, filePattern, SearchOption.TopDirectoryOnly))
+				{
+					File.SetAttributes(filePath, FileAttributes.Normal);
+					File.Delete(filePath);
+				}
+			}
+		}
 
 		public static void DeleteDirectory(string folderPath, bool echo = false)
-        {
-            if (Directory.Exists(folderPath))
-            {
+		{
+			if (Directory.Exists(folderPath))
+			{
 				if (echo)
 					Log.Info("DeleteDirectory: {0}", folderPath);
 
-                foreach (var filePath in Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories))
-                {
-                    File.SetAttributes(filePath, FileAttributes.Normal);
-                    File.Delete(filePath);
-                }
+				foreach (var filePath in Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories))
+				{
+					File.SetAttributes(filePath, FileAttributes.Normal);
+					File.Delete(filePath);
+				}
 				Directory.Delete(folderPath, true);
-            }
-        }
+			}
+		}
 
 		public static void CreateDirectory(string folderPath, bool echo = false)
 		{
 			if (Directory.Exists(folderPath) == false)
-            {
+			{
 				if (echo)
 					Log.Info("DeleteDirectory: {0}", folderPath);
 
@@ -214,6 +214,46 @@ namespace Microsoft.VisualXpress
 				Marshal.FreeHGlobal(argv);
 			}
 			return result ?? new string[0];
+		}
+
+		public class SetEnvironmentVariableScope : IDisposable
+		{
+			private string m_Name;
+			private string m_PreviousValue;
+
+			public SetEnvironmentVariableScope(string name, string value)
+			{
+				m_Name = name;
+				m_PreviousValue = Environment.GetEnvironmentVariable(m_Name);
+				Environment.SetEnvironmentVariable(m_Name, value);
+			}
+
+			public void Dispose()
+			{
+				Environment.SetEnvironmentVariable(m_Name, m_PreviousValue);
+			}
+		}
+
+		public class SetCurrentDirectoryScope : IDisposable
+		{
+			private string _PreviousPath;
+
+			public SetCurrentDirectoryScope(string path)
+			{
+				if (Directory.Exists(path))
+				{
+					_PreviousPath = Environment.CurrentDirectory;
+					Environment.CurrentDirectory = path;
+				}
+			}
+
+			public void Dispose()
+			{
+				if (Directory.Exists(_PreviousPath))
+				{
+					Environment.CurrentDirectory = _PreviousPath;
+				}
+			}
 		}
 	}
 }

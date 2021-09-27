@@ -219,7 +219,7 @@ namespace Microsoft.VisualXpress
 		True
 	}
 
-	public static class PropertyBoolExtensions
+	public static class PropertyExtensions
 	{
 		public static bool ToBool(this PropertyBool property, bool defaultValue = false)
 		{
@@ -233,6 +233,11 @@ namespace Microsoft.VisualXpress
 		public static void FromBool(this PropertyBool property, bool value)
 		{
 			property = value ? PropertyBool.True : PropertyBool.False;
+		}
+
+		public static Property FindByName(this Property[] properties, string name)
+		{
+			return properties?.FirstOrDefault(p => String.Compare(p.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0);
 		}
 	}
 }
