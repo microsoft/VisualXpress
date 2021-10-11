@@ -1,5 +1,8 @@
 VisualXpress Release Notes
 
+[Version 2.10.2]
+* VisualXpress extension support for Visual Studio 2022
+
 [Version 2.10.1]
 * Fixing bug connecting to a Perforce server over SSL
 * Updating to .NET Framework 4.7.2 for long path support by default
