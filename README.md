@@ -64,7 +64,7 @@ VisualXpress is a Visual Studio extension used easily integrate external tools i
 
 * It's easy to get started developing new features if you'd like!
 
-* You can then open VisualXpress.sln and build the project using VS 2017. The VS 2012 redist assemblies are already included in the project folders, so you don't need VS 2012 to build VisualXpress for 2012 or 2013 :)
+* You can then open VisualXpress.sln and build the project using VS 2017. Any Visual Studio Extension SDK requirements for other target version are included as Nuget package references, so you don't need VS 2019 installed to build VisualXpress compatible with 2019.
 	
 * VisualXpress.sln has custom project configurations and a PostBuild tool which handles installation and/or deployment.
 	
