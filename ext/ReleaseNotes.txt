@@ -1,5 +1,8 @@
 VisualXpress Release Notes
 
+[Version 2.10.3]
+* VisualXpress extension support for Visual Studio 2022 Preview 6
+
 [Version 2.10.2]
 * VisualXpress extension support for Visual Studio 2022
 
