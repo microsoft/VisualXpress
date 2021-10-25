@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Interop;
-using Microsoft.VisualStudio.CommandBars;
+using Microsoft.VisualStudio.Shell;
 using System.Collections.Specialized;
 using System.Text;
 
@@ -91,6 +91,7 @@ namespace Microsoft.VisualXpress
 
         private static Project FindProject(ProjectItem project, String name)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             if (project == null)
             {
                 return null;
@@ -114,6 +115,7 @@ namespace Microsoft.VisualXpress
 
         private static Project FindProject(Project project, String name)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             if (project == null)
             {
                 return null;
@@ -148,6 +150,7 @@ namespace Microsoft.VisualXpress
 
         private Project FindProject(String name)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             foreach (Project Project in Package.ActiveDTE2.Solution.Projects)
             {
                 var Result = FindProject(Project, name);
@@ -163,6 +166,7 @@ namespace Microsoft.VisualXpress
 
         public override bool Execute(PluginCommandOptions options)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             var ProjectName = options.GetFlag<string>(OptionNameProjectName);
 
             if (String.IsNullOrEmpty(ProjectName))
@@ -190,7 +194,7 @@ namespace Microsoft.VisualXpress
 
             var Thread = new System.Threading.Thread(new ThreadStart(() =>
             {
-                var ViewModel = new WindowViewModel(Package, Project.Name);
+                var ViewModel = new WindowViewModel(Package, ProjectName);
                 ViewModel.Deserialize(GlobalConfig);
 
                 var Window = new BuildMegaXgeWindow()
@@ -843,6 +847,7 @@ namespace Microsoft.VisualXpress
 
             private void Initialize()
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
                 _AvailableModes.Clear();
                 _AvailableConfigurations.Clear();
                 _AvailablePlatforms.Clear();

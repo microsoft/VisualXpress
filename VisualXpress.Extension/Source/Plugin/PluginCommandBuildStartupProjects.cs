@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.VisualStudio.Shell;
 
 namespace Microsoft.VisualXpress
 {
@@ -13,6 +14,7 @@ namespace Microsoft.VisualXpress
         {
             try
             {
+                ThreadHelper.ThrowIfNotOnUIThread();
                 EnvDTE80.SolutionBuild2 sb = (EnvDTE80.SolutionBuild2)Package.ActiveDTE2.Solution.SolutionBuild;
                 EnvDTE80.SolutionConfiguration2 sc = (EnvDTE80.SolutionConfiguration2)sb.ActiveConfiguration;
 

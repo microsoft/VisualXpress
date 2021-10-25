@@ -28,7 +28,7 @@ namespace Microsoft.VisualXpress
 	[ProvideOptionPage(typeof(UserDialogPage<UserOptionsControl>), "VisualXpress", "General", 0, 0, false)]
 	[InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
 	[Guid(GuidList.GuidVisualXpressPkgString)]
-	public sealed class Package : AsyncPackage, IVsSolutionLoadManager, IOleCommandTarget, IVsPersistSolutionOpts, IDisposable
+	public sealed class Package : AsyncPackage, IVsSolutionLoadEvents, IOleCommandTarget, IVsPersistSolutionOpts, IDisposable
 	{
 		private const string SettingsFileName = "VisualXpressSettings.xml";
 		private const string ExtensionGalleryProperty = "VisualXpressExtensionGallery";
@@ -59,9 +59,6 @@ namespace Microsoft.VisualXpress
 				IVsRunningDocumentTable vsDocTable = this.GetServiceOfType<IVsRunningDocumentTable>(typeof(IVsRunningDocumentTable));
 				m_DocTableEvents = DocTableEvents.New(vsDocTable);
 
-				IVsSolution vsSolution = this.GetServiceOfType<IVsSolution>(typeof(SVsSolution));
-				vsSolution.SetProperty((int)__VSPROPID4.VSPROPID_ActiveSolutionLoadManager, this);
-				
 				LoadSolutionUserOptions();
 				RefreshInternal();
 			}
@@ -73,6 +70,7 @@ namespace Microsoft.VisualXpress
 
 		protected override int QueryClose(out bool canClose)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			SaveUserOptions();
 			return base.QueryClose(out canClose);
 		}
@@ -141,21 +139,40 @@ namespace Microsoft.VisualXpress
 			this.VerifyShortcutKeyBindings();
 		}
 
-		int IVsSolutionLoadManager.OnBeforeOpenProject(ref Guid guidProjectID, ref Guid guidProjectType, string pszFileName, IVsSolutionLoadManagerSupport pSLMgrSupport)
+		int IVsSolutionLoadEvents.OnBeforeOpenSolution(string pszSolutionFilename)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 			string folder = "";
-			EnvDTE.Solution solution = this.ActiveDTE2.Solution;
-			if (solution != null && String.IsNullOrEmpty(solution.FullName) == false)
-				folder = Path.GetDirectoryName(solution.FullName);
-			else if (String.IsNullOrEmpty(pszFileName) == false)
-				folder = Path.GetDirectoryName(pszFileName);
-
+			if (File.Exists(pszSolutionFilename) == false)
+			{
+				folder = Path.GetDirectoryName(Path.GetFullPath(pszSolutionFilename));
+			}
 			Perforce.Process.GlobalConfig.ConfigDirectory = folder;
 			return Microsoft.VisualStudio.VSConstants.S_OK;
 		}
 
-		int IVsSolutionLoadManager.OnDisconnect()
+		int IVsSolutionLoadEvents.OnBeforeBackgroundSolutionLoadBegins()
+		{
+			return Microsoft.VisualStudio.VSConstants.S_OK;
+		}
+
+		int IVsSolutionLoadEvents.OnQueryBackgroundLoadProjectBatch(out bool pfShouldDelayLoadToNextIdle)
+		{
+			pfShouldDelayLoadToNextIdle = false;
+			return Microsoft.VisualStudio.VSConstants.S_OK;
+		}
+
+		int IVsSolutionLoadEvents.OnBeforeLoadProjectBatch(bool fIsBackgroundIdleBatch)
+		{
+			return Microsoft.VisualStudio.VSConstants.S_OK;
+		}
+
+		int IVsSolutionLoadEvents.OnAfterLoadProjectBatch(bool fIsBackgroundIdleBatch)
+		{
+			return Microsoft.VisualStudio.VSConstants.S_OK;
+		}
+
+		int IVsSolutionLoadEvents.OnAfterBackgroundSolutionLoadComplete()
 		{
 			return Microsoft.VisualStudio.VSConstants.S_OK;
 		}
@@ -238,6 +255,7 @@ namespace Microsoft.VisualXpress
 
 		int IVsPersistSolutionOpts.WriteUserOptions(IStream pOptionsStream, string pszKey)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			if (pszKey == SolutionOptionsKey)
 				SolutionOptions.Instance.WriteUserOptions(this, pOptionsStream);
 			return VSConstants.S_OK;
@@ -245,6 +263,7 @@ namespace Microsoft.VisualXpress
 
 		int IVsPersistSolutionOpts.ReadUserOptions(IStream pOptionsStream, string pszKey)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			if (pszKey == SolutionOptionsKey)
 				SolutionOptions.Instance.ReadUserOptions(this, pOptionsStream);
 			return VSConstants.S_OK;
@@ -1080,6 +1099,7 @@ namespace Microsoft.VisualXpress
 		{
 			try
 			{
+				ThreadHelper.ThrowIfNotOnUIThread();
 				this.ActiveDTE2.Documents.SaveAll();
 			}
 			catch (Exception e)
@@ -1117,7 +1137,11 @@ namespace Microsoft.VisualXpress
 
 		public IEnumerable<string> ActiveModifiedItemPaths
 		{
-			get { return this.ActiveDTE2.Documents.OfType<EnvDTE.Document>().Where(d => d.Saved == false).Select(d => d.FullName); }
+			get 
+			{
+				ThreadHelper.ThrowIfNotOnUIThread();
+				return this.ActiveDTE2.Documents.OfType<EnvDTE.Document>().Where(d => d.Saved == false).Select(d => d.FullName); 
+			}
 		}
 
 		public IEnumerable<ContextItem> GetSelectedItems(ContextType context)
@@ -1423,6 +1447,6 @@ namespace Microsoft.VisualXpress
 		{
 			m_DocTableEvents?.Dispose();
 		}
-	}
+    }
 }
 

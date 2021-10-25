@@ -1,5 +1,12 @@
 VisualXpress Release Notes
 
+[Version 2.11.0]
+* Major refactor of VisualXpress projects to migrated to Visual Studio 2022 project 
+  with version specific VSSDK packages supporting 2017 (x86), 2019 (x86), and 2022 (x64).
+  This also introduces VS version specific private gallery, which we can automatically
+  path using $(VisualStudioEditionYear) when expanding $(VisualXpressExtensionGallery).
+  The build root for the gallery to deploy is created within ".\intermediate\deploy\..."
+
 [Version 2.10.3]
 * VisualXpress extension support for Visual Studio 2022 Preview 6
 

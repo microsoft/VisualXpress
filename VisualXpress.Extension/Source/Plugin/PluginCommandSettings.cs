@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.Win32;
+using Microsoft.VisualStudio.Shell;
 
 namespace Microsoft.VisualXpress
 {
@@ -17,6 +17,7 @@ namespace Microsoft.VisualXpress
 
 		public override bool Execute(PluginCommandOptions options)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			m_Filter = options.GetFlag<string>(OptionNameFilter);
 			m_Settings = new SettingsManager();
 
@@ -33,8 +34,10 @@ namespace Microsoft.VisualXpress
 
 		public void LogCollections(string[] collectionNames)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			if (collectionNames == null)
 				return;
+
 			foreach (string collectionName in collectionNames.Where(n => !String.IsNullOrEmpty(n)))
 			{
 				if (IsVisible(collectionName))

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <Target Name="AfterBuild">
+    <PropertyGroup>
+      <VxDeployTargetDir>$([System.IO.Path]::GetFullPath($(ProjectDir)$(OutDir)\..\..\..\..\deploy))</VxDeployTargetDir>
+      <VxProjectOutputDir>$([System.IO.Path]::GetFullPath($(ProjectDir)$(OutDir)))</VxProjectOutputDir>
+      <VxDeployConfiguration>$([System.Text.RegularExpressions.Regex]::Replace($(Configuration), "-.*", ""))</VxDeployConfiguration>
+      <VxDeployExe>$([System.IO.Path]::GetFullPath($(ProjectDir)$(OutDir)\..\..\..\VisualXpress.Deploy\$(VxDeployConfiguration)\$(Platform)\VisualXpress.Deploy.exe))</VxDeployExe>
+      <VxDeployCommand>"$(VxDeployExe)" "$(TargetName)" "$(Configuration)" "$(VxProjectOutputDir)" "$(VsInstallRoot)\Common7\IDE" "$(VxDeployTargetDir)"</VxDeployCommand>
+    </PropertyGroup>
+    <Message Text="$(VxDeployCommand.Replace('\','/'))" Importance="High"/>
+    <Exec Command="$(VxDeployCommand.Replace('\','/'))"/>
+  </Target>
+</Project>

@@ -7,6 +7,7 @@ using System.Xml.XPath;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using EnvDTE;
 using EnvDTE80;
@@ -19,6 +20,7 @@ namespace Microsoft.VisualXpress
 
 		public ValueType GetValue<ValueType>(string name, ValueType defaultValue = default(ValueType), SettingsType stype = SettingsType.User)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			IVsSettingsStore store = GetReadOnlySettingsStore(stype);
 			if (store == null)
 				return defaultValue;
@@ -53,6 +55,7 @@ namespace Microsoft.VisualXpress
 
 		public bool SetValue<ValueType>(string name, ValueType value, SettingsType stype = SettingsType.User)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			IVsWritableSettingsStore store = GetWritableSettingsStore(stype);
 			if (store == null)
 				return false;
@@ -83,6 +86,7 @@ namespace Microsoft.VisualXpress
 
 		public string[] GetSubCollectionNames(string collection)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			IVsSettingsStore store = GetReadOnlySettingsStore(SettingsType.User);
 			if (store == null)
 				return null;
@@ -157,6 +161,7 @@ namespace Microsoft.VisualXpress
 
 		public string[] GetPropertyNames(string collection)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			IVsSettingsStore store = GetReadOnlySettingsStore(SettingsType.User);
 			if (store == null)
 				return null;
@@ -177,6 +182,7 @@ namespace Microsoft.VisualXpress
 
 		private IVsWritableSettingsStore GetWritableSettingsStore(SettingsType stype)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			switch (stype)
 			{
 				case SettingsType.User:
@@ -194,6 +200,7 @@ namespace Microsoft.VisualXpress
 		
 		private IVsSettingsStore GetReadOnlySettingsStore(SettingsType stype)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			switch (stype)
 			{
 				case SettingsType.User:

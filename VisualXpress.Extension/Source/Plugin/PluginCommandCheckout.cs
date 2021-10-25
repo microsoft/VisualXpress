@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualXpress.Perforce;
+using Microsoft.VisualStudio.Shell;
 
 namespace Microsoft.VisualXpress
 {
@@ -16,6 +16,7 @@ namespace Microsoft.VisualXpress
 
 		public override bool Execute(PluginCommandOptions options)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			string[] arguments = options.Arguments.ToArray();
 			if (arguments.Length == 0 && options.HasFlag(OptionNameModifiedItems))
 				arguments = this.Package.ActiveModifiedItemPaths.ToArray();

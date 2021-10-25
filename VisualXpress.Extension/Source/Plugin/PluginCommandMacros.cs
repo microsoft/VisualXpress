@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using Microsoft.VisualStudio.Shell;
 
 namespace Microsoft.VisualXpress
 {
@@ -12,6 +13,7 @@ namespace Microsoft.VisualXpress
 	{
 		public override bool Execute(PluginCommandOptions options)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			LogSeparator("Begin");
 			List<string> macroNames = new List<string>();
 			macroNames.AddRange(this.BuiltinMacroNames);

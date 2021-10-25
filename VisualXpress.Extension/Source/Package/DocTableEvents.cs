@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace Microsoft.VisualXpress
@@ -16,6 +17,7 @@ namespace Microsoft.VisualXpress
 
 		public static DocTableEvents New(IVsRunningDocumentTable documentTable)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			var docTableEvents = new DocTableEvents(documentTable);
 			documentTable.AdviseRunningDocTableEvents(docTableEvents, out uint cookie);
 			docTableEvents.SetCookie(cookie);
@@ -80,6 +82,7 @@ namespace Microsoft.VisualXpress
 
 		public int OnBeforeSave(uint docCookie)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			m_DocumentTable.GetDocumentInfo(
 				docCookie,
 				out uint flags,
@@ -189,6 +192,7 @@ namespace Microsoft.VisualXpress
 
 		public void Dispose()
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			if (m_Cookie != 0)
 			{
 				m_DocumentTable.UnadviseRunningDocTableEvents(m_Cookie);

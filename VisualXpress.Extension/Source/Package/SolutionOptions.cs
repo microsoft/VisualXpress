@@ -5,7 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Xml.Serialization;
-using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Debugger.Interop;
@@ -60,6 +60,7 @@ namespace Microsoft.VisualXpress
 		{
 			try
 			{
+				ThreadHelper.ThrowIfNotOnUIThread();
 				Log.Verbose("SolutionSettings.ReadUserOptions reading from stream");
 				using (MemoryStream stream = new MemoryStream(ReadStream(pOptionsStream)))
 				{
@@ -156,6 +157,7 @@ namespace Microsoft.VisualXpress
 
 		private byte[] ReadStream(IStream pOptionsStream)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			if (pOptionsStream == null)
 				return new byte[0];
 			using (MemoryStream data = new MemoryStream())
@@ -175,6 +177,7 @@ namespace Microsoft.VisualXpress
 
 		private void WriteStream(IStream pOptionsStream, byte[] data)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			if (pOptionsStream != null && data != null && data.Length > 0)
 			{
 				uint written;

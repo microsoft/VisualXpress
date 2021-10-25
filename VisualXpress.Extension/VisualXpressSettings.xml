@@ -59,7 +59,7 @@
   </Menu>
   <PropertyGroup>
     <Property Name="VisualXpressExtensionGallery">
-      file:\\contoso\studio\ipoint\VisualXpress\Gallery.atom
+      file:\\contoso\studio\ipoint\VisualXpress\$(VisualStudioEditionYear)\Gallery.atom
     </Property>
     <Property Name="P4IGNORE">
       $(P4IGNORE)

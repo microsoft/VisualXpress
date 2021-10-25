@@ -4,9 +4,10 @@ using System.Xml;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.Setup.Configuration;
 
-namespace Microsoft.VisualXpress.PostBuild
+namespace Microsoft.VisualXpress.Deploy
 {
 	public class Program
 	{
@@ -15,15 +16,17 @@ namespace Microsoft.VisualXpress.PostBuild
 			try
 			{
 				//System.Diagnostics.Debugger.Launch();
-				Console.WriteLine("PostBuild Command: {0}", System.Environment.CommandLine);
-				Console.WriteLine("PostBuild Args: {0}", (args.Length == 0 ? "" : String.Format("[\"{0}\"]", String.Join("\",\"", args))));
+				Console.WriteLine("VisualXpress.Deploy Command: {0}", System.Environment.CommandLine);
+				Console.WriteLine("VisualXpress.Deploy Args: {0}", (args.Length == 0 ? "" : String.Format("[\"{0}\"]", String.Join("\",\"", args))));
 
 				string targetName	  = args[0];
 				string configuration  = args[1];
-				string projectDir	  = Path.GetFullPath(args[2].Replace('/','\\').TrimEnd('\\'));
-				string buildDir		  = Path.GetFullPath(args[3].Replace('/','\\').TrimEnd('\\'));
-				string devEnvDir	  = Path.GetFullPath(args[4].Replace('/','\\').TrimEnd('\\'));
-				string deployDir	  = Path.GetFullPath(args[5].Replace('/','\\').TrimEnd('\\'));
+				string buildDir		  = Path.GetFullPath(args[2].Replace('/','\\').TrimEnd('\\'));
+				string devEnvDir	  = Path.GetFullPath(args[3].Replace('/','\\').TrimEnd('\\'));
+				string deployRoot	  = Path.GetFullPath(args[4].Replace('/','\\').TrimEnd('\\'));
+
+				string vsVersionYear = GetTargetVsVersionYear(targetName);
+				string deployDir = Path.Combine(deployRoot, vsVersionYear);
 
 				System.Environment.SetEnvironmentVariable("TEMP", buildDir);
 				System.Environment.SetEnvironmentVariable("TMP", buildDir);
@@ -31,48 +34,48 @@ namespace Microsoft.VisualXpress.PostBuild
 				bool DoInstall = configuration.Contains("Install");
 				bool DoUpdate = configuration.Contains("Update");
 
-				VsixManifest manifest = LoadVsixManifestFile(String.Format("{0}\\source.extension.vsixmanifest", projectDir));
-				Console.WriteLine("PostBuild PackageId: {0}", manifest.PackageId);
-				Console.WriteLine("PostBuild PackageVersion: {0}", manifest.PackageVersion);
+				VsixManifest manifest = LoadVsixManifestFile(String.Format("{0}\\source.extension.vsixmanifest", buildDir));
+				Console.WriteLine("VisualXpress.Deploy PackageId: {0}", manifest.PackageId);
+				Console.WriteLine("VisualXpress.Deploy PackageVersion: {0}", manifest.PackageVersion);
 
-				string srcAtomFile = String.Format("{0}\\GalleryTemplate.atom", projectDir);
+				string srcAtomFile = String.Format("{0}\\GalleryTemplate.atom", buildDir);
 				string dstAtomFile = String.Format("{0}\\Gallery.atom", buildDir);
-				BuildIndexAtom(srcAtomFile, dstAtomFile, manifest.PackageId, manifest.PackageVersion);
+				BuildIndexAtom(srcAtomFile, dstAtomFile, manifest.PackageId, manifest.PackageVersion, targetName);
 
 				string srcVsixFile = String.Format("{0}\\{1}.vsix", buildDir, targetName);
-				Console.WriteLine("PostBuild Deploy To: {0}", deployDir);
+				Console.WriteLine("VisualXpress.Deploy To: {0}", deployDir);
 				CopyFileVerbose(srcVsixFile, deployDir);
 				CopyFileVerbose(dstAtomFile, deployDir);
 
 				if (DoUpdate)
 				{
-					string[] vsVersions = {"15.0", "16.0", "17.0"};
-					foreach (string vsVersion in vsVersions)
+					var vsVersions = new Dictionary<string,string>(){{"2017","15.0"}, {"2019","16.0"}, {"2022","17.0"}};
+					if (vsVersions.TryGetValue(vsVersionYear, out string vsVersion) == false)
+						throw new Exception(String.Format("Failed to get vsVersion for target: {0}", targetName));
+						
+					bool doUpdateConfiguration = false;
+					foreach (string packageInstallFolder in GetVsVersionPackageInstallFolders(vsVersion, manifest.PackageId, manifest.PackageVersion))
 					{
-						bool doUpdateConfiguration = false;
-						foreach (string packageInstallFolder in GetVsVersionPackageInstallFolders(vsVersion, manifest.PackageId, manifest.PackageVersion))
-						{
-							if (Directory.Exists(packageInstallFolder) == false)
-								continue;
+						if (Directory.Exists(packageInstallFolder) == false)
+							continue;
 
-							Console.WriteLine("PostBuild Installing To: {0}", packageInstallFolder);
-							CopyFileVerbose(projectDir+"\\"+targetName+"Settings.xml", packageInstallFolder);
-							CopyFileVerbose(buildDir+"\\extension.vsixmanifest", packageInstallFolder);
-							CopyFileVerbose(buildDir+"\\"+targetName+".pkgdef", packageInstallFolder);
-							CopyFileVerbose(buildDir+"\\"+targetName+".dll", packageInstallFolder);
-							CopyFileVerbose(buildDir+"\\"+targetName+".pdb", packageInstallFolder);
-							doUpdateConfiguration = true;
-						}
+						Console.WriteLine("VisualXpress.Deploy Installing To: {0}", packageInstallFolder);
+						CopyFileVerbose(buildDir+"\\VisualXpressSettings.xml", packageInstallFolder);
+						CopyFileVerbose(buildDir+"\\extension.vsixmanifest", packageInstallFolder);
+						CopyFileVerbose(buildDir+"\\"+targetName+".pkgdef", packageInstallFolder);
+						CopyFileVerbose(buildDir+"\\"+targetName+".dll", packageInstallFolder);
+						CopyFileVerbose(buildDir+"\\"+targetName+".pdb", packageInstallFolder);
+						doUpdateConfiguration = true;
+					}
 
-						if (doUpdateConfiguration)
-						{
-							string vsVersionDevEnvFolder = GetVsVersionDevEnvFolder(vsVersion);
-							string vsVersionDevEnvExe = String.Format("{0}\\devenv.exe", vsVersionDevEnvFolder);
-							if (Directory.Exists(vsVersionDevEnvFolder) == false || File.Exists(vsVersionDevEnvExe) == false)
-								Console.WriteLine("Skipping configuration update for missing Visual Studio version {0}", vsVersion);
-							else
-								ExecuteProcess(vsVersionDevEnvExe, "/updateconfiguration");
-						}
+					if (doUpdateConfiguration)
+					{
+						string vsVersionDevEnvFolder = GetVsVersionDevEnvFolder(vsVersion);
+						string vsVersionDevEnvExe = String.Format("{0}\\devenv.exe", vsVersionDevEnvFolder);
+						if (Directory.Exists(vsVersionDevEnvFolder) == false || File.Exists(vsVersionDevEnvExe) == false)
+							Console.WriteLine("Skipping configuration update for missing Visual Studio version {0}", vsVersion);
+						else
+							ExecuteProcess(vsVersionDevEnvExe, "/updateconfiguration");
 					}
 				}
 
@@ -83,10 +86,18 @@ namespace Microsoft.VisualXpress.PostBuild
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("PostBuild Exception: {0}\n{1}", e.Message, e.StackTrace);
+				Console.WriteLine("VisualXpress.Deploy Exception: {0}\n{1}", e.Message, e.StackTrace);
 				return 1;
 			}
 			return 0;
+		}
+
+		private static string GetTargetVsVersionYear(string targetName)
+		{
+			 Match m = Regex.Match(targetName, @"\.(?<year>\d+)$");
+			 if (m.Success == false)
+				throw new Exception(String.Format("Failed to get visual studio year for target: {0}", targetName));
+			return m.Groups["year"].Value;
 		}
 
 		private static string[] GetVsVersionPackageInstallFolders(string vsVersion, string packageId, string packageVersion = null)
@@ -106,9 +117,13 @@ namespace Microsoft.VisualXpress.PostBuild
 			{
 				foreach (string vsExtensionPackageFolder in GetDirectories(String.Format("{0}\\Extensions", vsAppDataVersionFolder), "*"))
 				{
-					VsixManifest manifest = LoadVsixManifestFile(String.Format("{0}\\extension.vsixmanifest", vsExtensionPackageFolder));
-					if (String.IsNullOrEmpty(manifest.PackageId) == false && String.Compare(manifest.PackageId, packageId, StringComparison.InvariantCultureIgnoreCase) == 0)
-						packageInstallFolders.Add(vsExtensionPackageFolder);
+					string manifestFile = String.Format("{0}\\extension.vsixmanifest", vsExtensionPackageFolder);
+					if (File.Exists(manifestFile))
+					{
+						VsixManifest manifest = LoadVsixManifestFile(manifestFile);
+						if (String.IsNullOrEmpty(manifest.PackageId) == false && String.Compare(manifest.PackageId, packageId, StringComparison.InvariantCultureIgnoreCase) == 0)
+							packageInstallFolders.Add(vsExtensionPackageFolder);
+					}
 				}
 			}
 			return packageInstallFolders.ToArray();
@@ -154,31 +169,31 @@ namespace Microsoft.VisualXpress.PostBuild
 		{
 			XmlElement element = document.SelectSingleNode(xpath) as XmlElement;
 			if (element == null)
-				throw new Exception(String.Format("PostBuild Unable to find element [{0}]", xpath));
+				throw new Exception(String.Format("VisualXpress.Deploy Unable to find element [{0}]", xpath));
 			string value = element.GetAttribute(attribute);
 			if (String.IsNullOrEmpty(value))
-				throw new Exception(String.Format("PostBuild Unable to find element [{0}] attribute [{1}]", xpath, attribute));
+				throw new Exception(String.Format("VisualXpress.Deploy Unable to find element [{0}] attribute [{1}]", xpath, attribute));
 			return value;
 		}
 
 		private static void LaunchProcess(string fileName, string arguments)
 		{
-			Console.WriteLine("PostBuild Launching: {0} {1}", fileName, arguments);
+			Console.WriteLine("VisualXpress.Deploy Launching: {0} {1}", fileName, arguments);
 			System.Diagnostics.Process.Start(fileName, arguments);
 		}
 
 		private static void ExecuteProcess(string fileName, string arguments)
 		{
-			Console.WriteLine("PostBuild Executing: {0} {1}", fileName, arguments);
+			Console.WriteLine("VisualXpress.Deploy Executing: {0} {1}", fileName, arguments);
 			System.Diagnostics.Process.Start(fileName, arguments).WaitForExit();
 		}
 
 		private static bool CopyFileVerbose(string srcFile, string dstFolder, bool forceOverwrite = true)
 		{
 			bool result = CopyFile(srcFile, dstFolder, forceOverwrite);
-			Console.WriteLine(String.Format("PostBuild Copy {0}: {1} -> {2}", result ? "[SUCCESS]" : "[FAILED]", Path.GetFullPath(srcFile), Path.GetFullPath(dstFolder+"\\"+Path.GetFileName(srcFile))));
+			Console.WriteLine(String.Format("VisualXpress.Deploy Copy {0}: {1} -> {2}", result ? "[SUCCESS]" : "[FAILED]", Path.GetFullPath(srcFile), Path.GetFullPath(dstFolder+"\\"+Path.GetFileName(srcFile))));
 			if (result == false)
-				throw new Exception("PostBuild Copy Failed");
+				throw new Exception("VisualXpress.Deploy Copy Failed");
 			return result;
 		}
 
@@ -208,22 +223,26 @@ namespace Microsoft.VisualXpress.PostBuild
 			return false; 
 		}
 
-		private static void BuildIndexAtom(string srcAtomFile, string dstAtomFile, string packageId, string version)
+		private static void BuildIndexAtom(string srcAtomFile, string dstAtomFile, string packageId, string version, string targetName)
 		{
 			if (File.Exists(srcAtomFile) == false)
-				throw new Exception(String.Format("PostBuild UpdateIndexAtom failed to find file: {0}", srcAtomFile));
+				throw new Exception(String.Format("VisualXpress.Deploy UpdateIndexAtom failed to find file: {0}", srcAtomFile));
 			XmlDocument document = new XmlDocument();
 			document.Load(srcAtomFile);
 			XmlElement entryElem = FindAtomVisualXpressEntry(document, packageId);
 			if (entryElem == null)
-				throw new Exception(String.Format("PostBuild UpdateIndexAtom failed to find entry element in file: {0}", srcAtomFile));
+				throw new Exception(String.Format("VisualXpress.Deploy UpdateIndexAtom failed to find entry element in file: {0}", srcAtomFile));
 			XmlElement versionElem = entryElem.SelectSingleNode("*[local-name()='Vsix']/*[local-name()='Version']") as XmlElement;
 			if (versionElem == null)
-				throw new Exception(String.Format("PostBuild UpdateIndexAtom failed to find entry version in file: {0} at {1}", srcAtomFile, entryElem));
+				throw new Exception(String.Format("VisualXpress.Deploy UpdateIndexAtom failed to find entry version in file: {0} at {1}", srcAtomFile, entryElem));
 			if (versionElem.InnerText == version)
 				return;
-			Console.WriteLine(String.Format("PostBuild UpdateIndexAtom {0} version {1}", dstAtomFile, version));
+			Console.WriteLine(String.Format("VisualXpress.Deploy UpdateIndexAtom {0} version {1}", dstAtomFile, version));
 			versionElem.InnerText = version;
+			XmlElement contentElem = entryElem.SelectSingleNode("*[local-name()='content']") as XmlElement;
+			if (contentElem == null)
+				throw new Exception(String.Format("VisualXpress.Deploy UpdateIndexAtom failed to find entry content in file: {0} at {1}", srcAtomFile, entryElem));
+			contentElem.SetAttribute("src", String.Format("{0}.vsix", targetName));
 			SetFileWritable(dstAtomFile);
 			document.Save(dstAtomFile);
 		}
@@ -263,19 +282,19 @@ namespace Microsoft.VisualXpress.PostBuild
 		private static VsixManifest LoadVsixManifestFile(string srcFile)
 		{
 			VsixManifest manifest = new VsixManifest();
-			if (File.Exists(srcFile))
-			{
-				XmlDocument document = new XmlDocument();
-				using (XmlTextReader reader = new XmlTextReader(srcFile))
-				{
-					reader.Namespaces = false;
-					document.Load(reader);
-				}
+			if (File.Exists(srcFile) == false)
+				throw new Exception(String.Format("LoadVsixManifestFile failed to find file: {0}", srcFile));
 
-				string identityXPath = "PackageManifest/Metadata/Identity";
-				manifest.PackageId = GetXmlAttributeValue(document, identityXPath, "Id");
-				manifest.PackageVersion = GetXmlAttributeValue(document, identityXPath, "Version");
+			XmlDocument document = new XmlDocument();
+			using (XmlTextReader reader = new XmlTextReader(srcFile))
+			{
+				reader.Namespaces = false;
+				document.Load(reader);
 			}
+
+			string identityXPath = "PackageManifest/Metadata/Identity";
+			manifest.PackageId = GetXmlAttributeValue(document, identityXPath, "Id");
+			manifest.PackageVersion = GetXmlAttributeValue(document, identityXPath, "Version");
 			return manifest;
 		}
 
