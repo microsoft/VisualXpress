@@ -9,7 +9,7 @@ VisualXpress is a Visual Studio extension used easily integrate external tools i
 * Custom plugin implemented tools in addition to external system applications
 * Completely temporary VS commands that will not exist after package uninstall
 * Hot-reload VisualXpress updates to Visual Studio! (no restarts)
-* Single package compatible with VS 2015 - 2019
+* Extension compatible with VS 2017, 2019, 2022
 * Define keyboard shortcuts to any of the commands from the XML
 		
 # Perforce integration commands
@@ -29,14 +29,23 @@ VisualXpress is a Visual Studio extension used easily integrate external tools i
 
 # Installation
 
-* VisualXpress for Visual Studio 2015-2019 extension can be installed from running the VisualXpress.vsix
+* VisualXpress for Visual Studio extension can be installed from running the VisualXpress vsix after building. The *deploy* folder with the private Gallery.atom feeds can be copied to a network share for team deployment and auto-updating.
+```
+intermediate\
+   deploy\
+      2017\
+         VisualXpress.2017.vsix
+      2019\
+         VisualXpress.2019.vsix
+      2022\
+         VisualXpress.2022.vsix
+```		
 
 # Screenshots
 
 * Custom menus, toolbars, and commands!
 
   ![toolbars_menus](res/toolbars_menus.png)
-
 	
 * Custom Right-Click context menus!
 
@@ -72,10 +81,10 @@ VisualXpress is a Visual Studio extension used easily integrate external tools i
 
 # Building and Debugging
 
-1. Create a new (Desktop) shortcut to launch and "Experimental Instance" Visual Studio 2017
+1. Create a new (Desktop) shortcut to launch and "Experimental Instance" Visual Studio 2022
    Set shortcut target to:
 
-   "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe" /rootsuffix exp
+   devenv.exe /rootsuffix exp
 
 1. Launch Visual Studio using that shortcut. First time you may want to import your custom settings. This instance of Visual Studio should NOT have the VisualXpress extension installed.
 
@@ -83,8 +92,8 @@ VisualXpress is a Visual Studio extension used easily integrate external tools i
 
 1. Typically iterate and build the "Debug-Update" configuration. The PostBuild step will update the currently installed VisualXpress extension for the regular "non-experimental" instance of VS.
    
-1. Debug Visual Studio 2017 using executable: 
+1. Debug Visual Studio 2022 using executable: 
 
-   "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\devenv.exe"
+   devenv.exe
 
 
