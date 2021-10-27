@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Microsoft.VisualStudio.Shell;
 
 namespace Microsoft.VisualXpress
 {
@@ -25,7 +26,11 @@ namespace Microsoft.VisualXpress
 		public override bool Execute(PluginCommandOptions options)
 		{
 			if (options.HasFlag(OptionNameCopy))
+			{
+				#pragma warning disable VSTHRD010
 				ExecuteCopy(options);
+				#pragma warning restore
+			}
 			return true;
 		}
 
@@ -49,7 +54,12 @@ namespace Microsoft.VisualXpress
 			}
 			else
 			{
-				Package.ActiveDTE2.ExecuteCommand("Edit.Copy");
+				ThreadHelper.JoinableTaskFactory.Run(async delegate
+				{
+					await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+					this.Package.ActiveDTE2.ExecuteCommand("Edit.Copy");
+				});
+
 				if (options.HasFlag(OptionNameUnformat))
 					ExecuteActionSTA(() => ApplyClipboardUnformat());
 				else if (options.HasFlag(OptionNameUncolour))

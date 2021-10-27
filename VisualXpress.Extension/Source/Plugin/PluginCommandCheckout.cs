@@ -16,10 +16,15 @@ namespace Microsoft.VisualXpress
 
 		public override bool Execute(PluginCommandOptions options)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
 			string[] arguments = options.Arguments.ToArray();
 			if (arguments.Length == 0 && options.HasFlag(OptionNameModifiedItems))
-				arguments = this.Package.ActiveModifiedItemPaths.ToArray();
+			{
+				arguments = ThreadHelper.JoinableTaskFactory.Run(async delegate
+				{
+					await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+					return this.Package.ActiveModifiedItemPaths.ToArray();
+				});
+			}
 
 			string changelist = options.GetFlag<string>(OptionNameChangelist);
 			return CheckOutFiles(arguments, changelist);

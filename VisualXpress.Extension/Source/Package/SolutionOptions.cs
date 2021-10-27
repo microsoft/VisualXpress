@@ -38,6 +38,7 @@ namespace Microsoft.VisualXpress
 		{
 			try
 			{
+				ThreadHelper.ThrowIfNotOnUIThread();
 				Log.Verbose("SolutionSettings.WriteUserOptions writing to stream");
 				using (MemoryStream stream = new MemoryStream())
 				{

@@ -11,9 +11,12 @@ namespace Microsoft.VisualXpress
 	{
 		public override bool Execute(PluginCommandOptions options)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
-			this.Package.Refresh();
-			return true;
+			return ThreadHelper.JoinableTaskFactory.Run(async delegate
+			{
+				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+				this.Package.Refresh();
+				return true;
+			});
 		}
 	}
 }

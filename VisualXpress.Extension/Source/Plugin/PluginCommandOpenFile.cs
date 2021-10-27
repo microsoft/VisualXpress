@@ -15,19 +15,26 @@ namespace Microsoft.VisualXpress
 
 		public override bool Execute(PluginCommandOptions options)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
-			string[] files = options.Arguments.ToArray();
-			foreach (string file in files)
+			return ThreadHelper.JoinableTaskFactory.Run(async delegate
 			{
-				if (System.IO.File.Exists(file) == false && options.HasFlag(OptionNameCreate))
-					using (System.IO.File.Create(file)) {}
+				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+				string[] files = options.Arguments.ToArray();
+				foreach (string file in files)
+				{
+					if (System.IO.File.Exists(file) == false && options.HasFlag(OptionNameCreate))
+					{
+						using (System.IO.File.Create(file)) {}
+					}
+					if (System.IO.File.Exists(file) == false)
+					{
+						Log.Error("VisualXpress PluginCommandOpenFile failed to find file: {0}", file);
+						continue;
+					}
 
-				if (System.IO.File.Exists(file) == false)
-					Log.Error("VisualXpress PluginCommandOpenFile failed to find file: {0}", file);
-				else
 					this.Package.ActiveDTE2.ItemOperations.OpenFile(file, EnvDTE.Constants.vsViewKindTextView);
-			}
-			return true;
+				}
+				return true;
+			});
 		}
 	}
 }

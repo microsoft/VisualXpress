@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using System.Xml.Serialization;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Threading;
 
 namespace Microsoft.VisualXpress
 {
@@ -134,7 +135,7 @@ namespace Microsoft.VisualXpress
 					bar.FreezeOutput(1);
 					m_UnfreezeAction = new LatentAction(TextFreezeTimeoutMs, (context) => 
 					{
-						ThreadHelper.JoinableTaskFactory.RunAsync(async delegate {
+						var _ = ThreadHelper.JoinableTaskFactory.RunAsync(async delegate {
 							await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 							bar.FreezeOutput(0);
 						});
@@ -243,7 +244,7 @@ namespace Microsoft.VisualXpress
 		{
 			try
 			{
-				ThreadHelper.JoinableTaskFactory.RunAsync(async delegate {
+				var _ = ThreadHelper.JoinableTaskFactory.RunAsync(async delegate {
 					await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 					Log.Instance.WriteLineInternal(channel, text);
 				});

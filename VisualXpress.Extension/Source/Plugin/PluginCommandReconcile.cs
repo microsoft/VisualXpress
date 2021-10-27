@@ -26,7 +26,7 @@ namespace Microsoft.VisualXpress
 			if (String.IsNullOrEmpty(changelist) == false)
 				args += String.Format(" -c {0}", changelist);
 
-			System.Threading.Tasks.Task.Run(() => this.ExecuteReconcile(args, paths));
+			this.ExecuteReconcile(args, paths);
 			return true;
 		}
 

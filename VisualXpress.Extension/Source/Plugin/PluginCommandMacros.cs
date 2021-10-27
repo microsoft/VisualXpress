@@ -13,24 +13,27 @@ namespace Microsoft.VisualXpress
 	{
 		public override bool Execute(PluginCommandOptions options)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
-			LogSeparator("Begin");
-			List<string> macroNames = new List<string>();
-			macroNames.AddRange(this.BuiltinMacroNames);
-			macroNames.AddRange(this.LocalMacroNames);
+            return ThreadHelper.JoinableTaskFactory.Run(async delegate
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+				LogSeparator("Begin");
+				List<string> macroNames = new List<string>();
+				macroNames.AddRange(this.BuiltinMacroNames);
+				macroNames.AddRange(this.LocalMacroNames);
 			
-			foreach (var context in Enum.GetValues(typeof(Package.ContextType)).OfType<Package.ContextType>())
-			{
-				var items = this.Package.GetSelectedItems(context).ToArray();
-				for (int itemIndex = 0; itemIndex < items.Length; ++itemIndex)
+				foreach (var context in Enum.GetValues(typeof(Package.ContextType)).OfType<Package.ContextType>())
 				{
-					Package.ContextItem item = items[itemIndex];
-					foreach (var name in macroNames.Select(n => String.Format("$({0})", n)))
-						Log.Info("Context=[{0}] Item=[{1}][{2}] Name=[{3}] Value=[{4}]", context, itemIndex, item.Path, name, this.Package.ExpandText(name, item));
+					var items = this.Package.GetSelectedItems(context).ToArray();
+					for (int itemIndex = 0; itemIndex < items.Length; ++itemIndex)
+					{
+						Package.ContextItem item = items[itemIndex];
+						foreach (var name in macroNames.Select(n => String.Format("$({0})", n)))
+							Log.Info("Context=[{0}] Item=[{1}][{2}] Name=[{3}] Value=[{4}]", context, itemIndex, item.Path, name, this.Package.ExpandText(name, item));
+					}
 				}
-			}
-			LogSeparator("End");
-			return true;
+				LogSeparator("End");
+				return true;
+			});
 		}
 
 		public void LogSeparator(string id)

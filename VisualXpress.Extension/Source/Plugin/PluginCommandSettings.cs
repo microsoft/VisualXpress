@@ -17,14 +17,17 @@ namespace Microsoft.VisualXpress
 
 		public override bool Execute(PluginCommandOptions options)
 		{
-			ThreadHelper.ThrowIfNotOnUIThread();
-			m_Filter = options.GetFlag<string>(OptionNameFilter);
-			m_Settings = new SettingsManager();
+			return ThreadHelper.JoinableTaskFactory.Run(async delegate
+			{
+				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+				m_Filter = options.GetFlag<string>(OptionNameFilter);
+				m_Settings = new SettingsManager();
 
-			LogSeparator("Begin");
-			LogCollections(m_Settings.GetSubCollectionNames(""));
-			LogSeparator("End");
-			return true;
+				LogSeparator("Begin");
+				LogCollections(m_Settings.GetSubCollectionNames(""));
+				LogSeparator("End");
+				return true;
+			});
 		}
 
 		public void LogSeparator(string id)
@@ -64,7 +67,7 @@ namespace Microsoft.VisualXpress
 		{
 			if (String.IsNullOrEmpty(text))
 				return false;
-			if (String.IsNullOrEmpty(m_Filter) == false && Regex.IsMatch(text, m_Filter) == false && Regex.IsMatch(text.Replace('\\','/'), m_Filter) == false)
+			if (String.IsNullOrEmpty(m_Filter) == false && Regex.IsMatch(text, m_Filter) == false && Regex.IsMatch(text.Replace('\\', '/'), m_Filter) == false)
 				return false;
 			return true;
 		}

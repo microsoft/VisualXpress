@@ -34,7 +34,7 @@ namespace Microsoft.VisualXpress.Deploy
 				bool DoInstall = configuration.Contains("Install");
 				bool DoUpdate = configuration.Contains("Update");
 
-				VsixManifest manifest = LoadVsixManifestFile(String.Format("{0}\\source.extension.vsixmanifest", buildDir));
+				VsixManifest manifest = LoadVsixManifestFile(String.Format("{0}\\extension.vsixmanifest", buildDir));
 				Console.WriteLine("VisualXpress.Deploy PackageId: {0}", manifest.PackageId);
 				Console.WriteLine("VisualXpress.Deploy PackageVersion: {0}", manifest.PackageVersion);
 

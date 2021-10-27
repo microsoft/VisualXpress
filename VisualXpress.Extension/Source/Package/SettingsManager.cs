@@ -107,6 +107,7 @@ namespace Microsoft.VisualXpress
 
 		public bool Refresh(IEnumerable<string> names)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			IVsSettingsStore store = GetReadOnlySettingsStore(SettingsType.User);
 			if (store == null)
 				return false;

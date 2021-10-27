@@ -135,6 +135,7 @@ namespace Microsoft.VisualXpress
 
 		private void OnDTEEventsStartupComplete()
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			Log.Verbose("VisualXpressPackage.OnDTEEventsStartupComplete: Begin");
 			this.VerifyShortcutKeyBindings();
 		}
@@ -648,6 +649,8 @@ namespace Microsoft.VisualXpress
 
 		private void AddContextMenuItem(MenuItemCommand itemCommand, bool beginGroup)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+
 			CommandBarInfo[] info = new CommandBarInfo[]{
 				new CommandBarInfo { Name="Easy MDI Document Window", Context=ContextType.Document },
 				new CommandBarInfo { Name="Item", Context=ContextType.Solution },
@@ -682,6 +685,7 @@ namespace Microsoft.VisualXpress
 		{
 			try
 			{
+				ThreadHelper.ThrowIfNotOnUIThread();
 				if (commandBar == null)
 				{
 					commandBar = this.FindAddCommandBar(this.ActiveDTE2.CommandBars as CommandBars, Package.ToolbarName, MsoBarPosition.msoBarTop);
@@ -783,6 +787,7 @@ namespace Microsoft.VisualXpress
 
 		private void AddDebugContextMenuItems()
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			CommandBars commandBars = this.ActiveDTE2.CommandBars as CommandBars;
 			foreach (CommandBar cc in commandBars)
 			{
@@ -865,13 +870,18 @@ namespace Microsoft.VisualXpress
 		private void ExecuteAction(Action action, bool wait)
 		{
 			if (wait)
+			{
 				action();
+			}
 			else
-				Task.Run(action);
+			{
+				var _ = Task.Run(action);
+			}
 		}
 
 		public string ExpandText(string text, ContextItem item = default(ContextItem), HashSet<string> visited = null, Dictionary<string,string> properties = null)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			return Regex.Replace(text??"", @"\$\((.+?)\)", (Match m) => {
 				string name = m.Groups[1].Value;
 				string result = "";
@@ -892,6 +902,7 @@ namespace Microsoft.VisualXpress
 		{
 			try
 			{
+				ThreadHelper.ThrowIfNotOnUIThread();
 				if (String.IsNullOrEmpty(name))
 					return "";
 			
@@ -999,6 +1010,7 @@ namespace Microsoft.VisualXpress
 			try
 			{
 				ThreadHelper.ThrowIfNotOnUIThread();
+				#pragma warning disable VSTHRD010
 
 				// No active items if IDE is not created yet
 				DTE2 dte = this.ActiveDTE2;
@@ -1087,6 +1099,7 @@ namespace Microsoft.VisualXpress
 					if (dte.Solution != null && String.IsNullOrEmpty(dte.Solution.FullName) == false)
 						return dte.Solution.FullName;
 				}
+				#pragma warning restore
 			}
 			catch (Exception e)
 			{
@@ -1112,27 +1125,43 @@ namespace Microsoft.VisualXpress
 
 		public TService GetServiceOfType<TService>(Type serviceType) where TService : class
 		{
-			return base.GetServiceAsync(serviceType)?.Result as TService;
+			return ThreadHelper.JoinableTaskFactory.Run(async () => await base.GetServiceAsync(serviceType)) as TService;
 		}
 
 		public DTE2 ActiveDTE2
 		{
-			get { return GetServiceOfType<DTE2>(typeof(DTE)); }
+			get 
+			{
+				ThreadHelper.ThrowIfNotOnUIThread();
+				return GetServiceOfType<DTE2>(typeof(DTE)); 
+			}
 		}
 
 		public string ActiveItemPath
 		{
-			get { return this.GetActiveItemPath(ContextType.Document|ContextType.Project|ContextType.Solution); }
+			get 
+			{ 
+				ThreadHelper.ThrowIfNotOnUIThread();
+				return this.GetActiveItemPath(ContextType.Document|ContextType.Project|ContextType.Solution); 
+			}
 		}
 
 		public string ActiveProjectPath
 		{
-			get { return this.GetActiveItemPath(ContextType.Project); }
+			get 
+			{ 
+				ThreadHelper.ThrowIfNotOnUIThread();
+				return this.GetActiveItemPath(ContextType.Project); 
+			}
 		}
 
 		public string ActiveSolutionPath
 		{
-			get { return this.GetActiveItemPath(ContextType.Solution); }
+			get 
+			{ 
+				ThreadHelper.ThrowIfNotOnUIThread();
+				return this.GetActiveItemPath(ContextType.Solution); 
+			}
 		}
 
 		public IEnumerable<string> ActiveModifiedItemPaths
@@ -1140,7 +1169,9 @@ namespace Microsoft.VisualXpress
 			get 
 			{
 				ThreadHelper.ThrowIfNotOnUIThread();
+				#pragma warning disable VSTHRD010
 				return this.ActiveDTE2.Documents.OfType<EnvDTE.Document>().Where(d => d.Saved == false).Select(d => d.FullName); 
+				#pragma warning restore
 			}
 		}
 
@@ -1265,12 +1296,14 @@ namespace Microsoft.VisualXpress
 
 		public IEnumerable<string> GetProjectFolders()
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			// Include all of the root folders referenced by the solution
 			return this.GetRootFolders(this.FindProjectFiles());
 		}
 
 		public IEnumerable<string> GetProjectFiles()
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			// Include all of the files referenced by the solution
 			return this.FindProjectFiles().Where(path => File.Exists(path)).Select(file => Path.GetFullPath(file));
 		}
@@ -1314,12 +1347,14 @@ namespace Microsoft.VisualXpress
 
 		public IEnumerable<string> GetActiveItemFolders(ContextType context)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			// Include all of the active root folders
 			return this.GetRootFolders(this.GetActiveItemPaths(context));
 		}
 
 		public IEnumerable<string> GetActiveItemFiles(ContextType context)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			// Include all of the active files
 			return this.GetActiveItemPaths(context).Where(path => File.Exists(path)).Select(file => Path.GetFullPath(file));
 		}
@@ -1445,7 +1480,10 @@ namespace Microsoft.VisualXpress
 
 		public void Dispose()
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+			#pragma warning disable RCS1194
 			m_DocTableEvents?.Dispose();
+			#pragma warning restore
 		}
     }
 }

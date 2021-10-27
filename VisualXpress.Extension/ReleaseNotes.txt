@@ -1,5 +1,13 @@
 VisualXpress Release Notes
 
+[Version 2.11.1.0]
+* Enabling and fixing all code analysis warnings to correct issues calling UI functions
+  from a thread other than the main thread
+* Enabling warnings as errors, all configurations, no project warning exclusions
+* Adding custom vsixmanifest build operation to automatically include the application
+  version as defined within a shared AssemblyInfo.cs. This version is also used as the 
+  assembly version for VisualXpress
+
 [Version 2.11.0]
 * Major refactor of VisualXpress projects to migrated to Visual Studio 2022 project 
   with version specific VSSDK packages supporting 2017 (x86), 2019 (x86), and 2022 (x64).

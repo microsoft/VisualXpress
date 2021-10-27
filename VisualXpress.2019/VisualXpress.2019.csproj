@@ -40,9 +40,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <NoWarn>VSTHRD105;VSTHRD110;CS1762;VSTHRD010</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Install|AnyCPU'">
     <OutputPath>..\intermediate\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
@@ -52,9 +54,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <NoWarn>VSTHRD105;VSTHRD110;CS1762;VSTHRD010</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Update|AnyCPU'">
     <OutputPath>..\intermediate\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
@@ -64,9 +68,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <NoWarn>VSTHRD105;VSTHRD110;CS1762;VSTHRD010</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>..\intermediate\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
@@ -75,9 +81,11 @@
     <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <NoWarn>VSTHRD105;VSTHRD110;CS1762;VSTHRD010</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Install|AnyCPU'">
     <OutputPath>..\intermediate\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
@@ -86,9 +94,11 @@
     <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <NoWarn>VSTHRD105;VSTHRD110;CS1762;VSTHRD010</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Update|AnyCPU'">
     <OutputPath>..\intermediate\builds\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
@@ -97,9 +107,11 @@
     <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <NoWarn>VSTHRD105;VSTHRD110;CS1762;VSTHRD010</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <Import Project="..\VisualXpress.Extension\VisualXpress.Extension.projitems" Label="Shared" />
   <ItemGroup>
@@ -117,7 +129,6 @@
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

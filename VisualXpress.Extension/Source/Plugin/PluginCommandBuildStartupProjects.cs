@@ -12,25 +12,26 @@ namespace Microsoft.VisualXpress
     {
         public override bool Execute(PluginCommandOptions options)
         {
-            try
+            return ThreadHelper.JoinableTaskFactory.Run(async delegate
             {
-                ThreadHelper.ThrowIfNotOnUIThread();
-                EnvDTE80.SolutionBuild2 sb = (EnvDTE80.SolutionBuild2)Package.ActiveDTE2.Solution.SolutionBuild;
-                EnvDTE80.SolutionConfiguration2 sc = (EnvDTE80.SolutionConfiguration2)sb.ActiveConfiguration;
-
-                Package.ActiveDTE2.ExecuteCommand("View.Output");
-
-                foreach (String project in (Array)sb.StartupProjects)
+                try
                 {
-                    Package.ActiveDTE2.Solution.SolutionBuild.BuildProject(sc.Name + "|" + sc.PlatformName, project, false);
-                }
+                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    EnvDTE80.SolutionBuild2 sb = (EnvDTE80.SolutionBuild2)Package.ActiveDTE2.Solution.SolutionBuild;
+                    EnvDTE80.SolutionConfiguration2 sc = (EnvDTE80.SolutionConfiguration2)sb.ActiveConfiguration;
+                    Package.ActiveDTE2.ExecuteCommand("View.Output");
 
-            }
-            catch (Exception e)
-            {
-                Log.Error("PluginCommandBuildStartupProjects failed: {0}", e.Message);
-            }
-            return true;
+                    foreach (String project in (Array)sb.StartupProjects)
+                    {
+                        Package.ActiveDTE2.Solution.SolutionBuild.BuildProject(sc.Name + "|" + sc.PlatformName, project, false);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error("PluginCommandBuildStartupProjects failed: {0}", e.Message);
+                }
+                return true;
+            });
         }
     }
 }

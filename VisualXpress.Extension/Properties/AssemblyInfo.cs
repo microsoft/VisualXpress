@@ -29,8 +29,16 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion(Microsoft.VisualXpress.AssemblyInfoConstants.VisualXpressVersion)]
+[assembly: AssemblyFileVersion(Microsoft.VisualXpress.AssemblyInfoConstants.VisualXpressVersion)]
+
+namespace Microsoft.VisualXpress
+{
+	internal static class AssemblyInfoConstants
+	{
+		public const string VisualXpressVersion = "2.11.1.0";
+	}
+}
 
 
 
