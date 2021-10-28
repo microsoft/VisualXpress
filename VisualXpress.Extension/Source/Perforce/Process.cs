@@ -153,6 +153,12 @@ namespace Microsoft.VisualXpress.Perforce
 				p.StartInfo.CreateNoWindow = true;
 				p.StartInfo.UseShellExecute = false;
 
+				Dictionary<string, string> envVars = GetPerforceEnvironmentVariables();
+				foreach (KeyValuePair<string, string> envVar in envVars)
+				{
+					p.StartInfo.EnvironmentVariables[envVar.Key] = envVar.Value;
+				}
+
 				if (outputReceiver != null)
 				{
 					p.StartInfo.RedirectStandardError = true;

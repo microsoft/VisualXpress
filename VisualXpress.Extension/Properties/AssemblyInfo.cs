@@ -36,7 +36,7 @@ namespace Microsoft.VisualXpress
 {
 	internal static class AssemblyInfoConstants
 	{
-		public const string VisualXpressVersion = "2.11.1.0";
+		public const string VisualXpressVersion = "2.11.2.0";
 	}
 }
 

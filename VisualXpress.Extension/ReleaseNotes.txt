@@ -1,5 +1,10 @@
 VisualXpress Release Notes
 
+[Version 2.11.2.0]
+* Significant reduction in startup time for commands using p4v such as showing
+  file history, revgraph, timelapse. To get the best startup performance, the 
+  p4v process's P4 environment variables also needed to be set, not just on cmd line.  
+
 [Version 2.11.1.0]
 * Enabling and fixing all code analysis warnings to correct issues calling UI functions
   from a thread other than the main thread
