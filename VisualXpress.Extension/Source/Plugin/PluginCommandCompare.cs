@@ -74,7 +74,7 @@ namespace Microsoft.VisualXpress
 				if (Regex.IsMatch(depotRightFile, mapping.Search, RegexOptions.IgnoreCase))
 				{
 					string depotLeftFileCandidate = Regex.Replace(depotRightFile, mapping.Search, mapping.Replace, RegexOptions.IgnoreCase);
-					if (String.Compare(depotLeftFileCandidate, rightFile, StringComparison.CurrentCultureIgnoreCase) != 0)
+					if (String.Compare(depotLeftFileCandidate, rightFile, StringComparison.InvariantCultureIgnoreCase) != 0)
 					{
 						depotLeftFile = depotLeftFileCandidate;
 						Log.Verbose("Mapping: {0} -> {1}", depotRightFile, depotLeftFile);
@@ -99,7 +99,7 @@ namespace Microsoft.VisualXpress
 				depotRightFile = rightFile.Replace('\\', '/');
 
 			string leftFile = Regex.Replace(depotRightFile, search, replace, RegexOptions.IgnoreCase);
-			if (String.Compare(leftFile, rightFile, StringComparison.CurrentCultureIgnoreCase) == 0)
+			if (String.Compare(leftFile, rightFile, StringComparison.InvariantCultureIgnoreCase) == 0)
 				return false;
 
 			ExecuteFileCompare(leftFile, leftLocal, rightFile, rightLocal);
@@ -187,8 +187,8 @@ namespace Microsoft.VisualXpress
 		{
 			if (options != null)
 			{
-				string search = options.GetFlag<string>(OptionNameSearch);
-				string replace = options.GetFlag<string>(OptionNameReplace);
+				string search = options.GetFlagValue(OptionNameSearch);
+				string replace = options.GetFlagValue(OptionNameReplace);
 				if (String.IsNullOrEmpty(search) == false && String.IsNullOrEmpty(replace) == false)
 				{
 					string depotFilePath = Perforce.Process.GetDepotFile(filePath);
@@ -217,7 +217,7 @@ namespace Microsoft.VisualXpress
 
 		public IEnumerable<DepotPathMapping> GetBranchPathMappings(PluginCommandOptions options)
 		{
-			string branch = options.GetFlag<string>(OptionNameBranch);
+			string branch = options.GetFlagValue(OptionNameBranch);
 			if (String.IsNullOrEmpty(branch) == false)
 			{
 				Perforce.BranchResult branchResult = Perforce.Process.Execute<Perforce.BranchResult>(String.Format("branch -o {0}", branch));
@@ -235,8 +235,8 @@ namespace Microsoft.VisualXpress
 
 		public IEnumerable<DepotPathMapping> GetSearchReplacePathMappings(PluginCommandOptions options)
 		{
-			string search = options.GetFlag<string>(OptionNameSearch);
-			string replace = options.GetFlag<string>(OptionNameReplace);
+			string search = options.GetFlagValue(OptionNameSearch);
+			string replace = options.GetFlagValue(OptionNameReplace);
 			if (String.IsNullOrEmpty(search) == false && String.IsNullOrEmpty(replace) == false)
 				yield return new DepotPathMapping { Search=search, Replace=replace };
 		}

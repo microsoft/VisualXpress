@@ -26,7 +26,7 @@ namespace Microsoft.VisualXpress
 				});
 			}
 
-			string changelist = options.GetFlag<string>(OptionNameChangelist);
+			string changelist = options.GetFlagValue(OptionNameChangelist);
 			return CheckOutFiles(arguments, changelist);
 		}
 

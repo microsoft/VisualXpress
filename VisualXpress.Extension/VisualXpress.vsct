@@ -39,24 +39,24 @@
     </Groups>
 
     <!--
-	  # Python script to generate KeyBinding* button elements
-		count = 16
+    # Python script to generate KeyBinding* button elements
+    count = 16
     print('    <Buttons>')
-		for i in range(count):
-			print('      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding%02d">' % i)
-			print('        <CommandFlag>CommandWellOnly</CommandFlag>')
-			print('        <Strings>')
-			print('          <CommandName>cmdidVisualXpressKeyBinding%02d</CommandName>' % i)
-			print('          <ButtonText>VisualXpress KeyBinding%02d</ButtonText>' % i)
-			print('          <CanonicalName>VisualXpress.KeyBinding%02d</CanonicalName>' % i)
-			print('          <LocCanonicalName>VisualXpress.KeyBinding%02d</LocCanonicalName>' % i)
-			print('        </Strings>')
-			print('      </Button>')
+    for i in range(count):
+      print('      <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding%02d">' % i)
+      print('        <CommandFlag>CommandWellOnly</CommandFlag>')
+      print('        <Strings>')
+      print('          <CommandName>cmdidVisualXpressKeyBinding%02d</CommandName>' % i)
+      print('          <ButtonText>VisualXpress KeyBinding%02d</ButtonText>' % i)
+      print('          <CanonicalName>VisualXpress.KeyBinding%02d</CanonicalName>' % i)
+      print('          <LocCanonicalName>VisualXpress.KeyBinding%02d</LocCanonicalName>' % i)
+      print('        </Strings>')
+      print('      </Button>')
     print('    </Buttons>')
     
-		for i in range(count):
-			print('    <IDSymbol name="cmdidVisualXpressKeyBinding%02d" value="%d" />' % (i, i))
-	-->
+    for i in range(count):
+      print('    <IDSymbol name="cmdidVisualXpressKeyBinding%02d" value="%d" />' % (i, i))
+  -->
     
     <Buttons>
       <Button guid="guidVisualXpressCmdSet" id="cmdidVisualXpressKeyBinding00">

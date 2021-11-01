@@ -22,7 +22,7 @@ namespace Microsoft.VisualXpress
 				return true;
 
 			string args = String.Empty;
-			string changelist = options.GetFlag<string>(OptionNameChangelist);
+			string changelist = options.GetFlagValue(OptionNameChangelist);
 			if (String.IsNullOrEmpty(changelist) == false)
 				args += String.Format(" -c {0}", changelist);
 

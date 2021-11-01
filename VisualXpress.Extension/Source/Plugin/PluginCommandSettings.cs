@@ -20,7 +20,7 @@ namespace Microsoft.VisualXpress
 			return ThreadHelper.JoinableTaskFactory.Run(async delegate
 			{
 				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-				m_Filter = options.GetFlag<string>(OptionNameFilter);
+				m_Filter = options.GetFlagValue(OptionNameFilter);
 				m_Settings = new SettingsManager();
 
 				LogSeparator("Begin");

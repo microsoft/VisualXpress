@@ -171,7 +171,7 @@ namespace Microsoft.VisualXpress
 			return ThreadHelper.JoinableTaskFactory.Run(async delegate
 			{
 				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-				var ProjectName = options.GetFlag<string>(OptionNameProjectName);
+				string ProjectName = options.GetFlagValue(OptionNameProjectName);
 
 				if (String.IsNullOrEmpty(ProjectName))
 				{
@@ -179,16 +179,15 @@ namespace Microsoft.VisualXpress
 					return false;
 				}
 
-				var ProcessPath = options.GetFlag<string>(OptionNameProcessPath);
-
+				string ProcessPath = options.GetFlagValue(OptionNameProcessPath);
 				if (String.IsNullOrEmpty(ProcessPath))
 				{
 					Log.Error($"Process path ({OptionNameProcessPath}) argument not provided.");
 					return false;
 				}
 
-				var ProcessArgs = options.GetFlag<string>(OptionNameProcessArgs);
-				var Project = FindProject(ProjectName);
+				string ProcessArgs = options.GetFlagValue(OptionNameProcessArgs);
+				EnvDTE.Project Project = FindProject(ProjectName);
 
 				if (Project == null)
 				{

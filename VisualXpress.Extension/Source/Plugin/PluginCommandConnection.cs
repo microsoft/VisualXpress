@@ -102,11 +102,11 @@ namespace Microsoft.VisualXpress
 		{
 			if (rhs == null || lhs == null)
 				return false;
-			if (String.Compare(rhs.User ?? "", lhs.User ?? "", StringComparison.CurrentCultureIgnoreCase) != 0)
+			if (String.Compare(rhs.User ?? "", lhs.User ?? "", StringComparison.InvariantCultureIgnoreCase) != 0)
 				return false;
-			if (String.Compare(NameIndex(rhs.Port, 0), NameIndex(lhs.Port, 0), StringComparison.CurrentCultureIgnoreCase) != 0)
+			if (String.Compare(NameIndex(rhs.Port, 0), NameIndex(lhs.Port, 0), StringComparison.InvariantCultureIgnoreCase) != 0)
 				return false;
-			if (String.Compare(rhs.Client ?? "", lhs.Client ?? "", StringComparison.CurrentCultureIgnoreCase) != 0)
+			if (String.Compare(rhs.Client ?? "", lhs.Client ?? "", StringComparison.InvariantCultureIgnoreCase) != 0)
 				return false;
 			return true;
 		}

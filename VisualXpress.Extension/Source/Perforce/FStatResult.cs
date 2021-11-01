@@ -51,8 +51,8 @@ namespace Microsoft.VisualXpress.Perforce
 		public Node FindNode(string path)
 		{
 			path = Process.NormalizePath(path);
-			return m_Nodes.FirstOrDefault(n => String.Compare(path, Process.NormalizePath(n.DepotFile), StringComparison.CurrentCultureIgnoreCase) == 0 || 
-											   String.Compare(path, Process.NormalizePath(n.ClientFile), StringComparison.CurrentCultureIgnoreCase) == 0);
+			return m_Nodes.FirstOrDefault(n => String.Compare(path, Process.NormalizePath(n.DepotFile), StringComparison.InvariantCultureIgnoreCase) == 0 || 
+											   String.Compare(path, Process.NormalizePath(n.ClientFile), StringComparison.InvariantCultureIgnoreCase) == 0);
 		}
 
 		public override void Parse(OutputLine[] output)

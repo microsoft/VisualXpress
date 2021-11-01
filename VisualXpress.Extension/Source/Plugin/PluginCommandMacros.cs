@@ -13,14 +13,14 @@ namespace Microsoft.VisualXpress
 	{
 		public override bool Execute(PluginCommandOptions options)
 		{
-            return ThreadHelper.JoinableTaskFactory.Run(async delegate
-            {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+			return ThreadHelper.JoinableTaskFactory.Run(async delegate
+			{
+				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 				LogSeparator("Begin");
 				List<string> macroNames = new List<string>();
 				macroNames.AddRange(this.BuiltinMacroNames);
 				macroNames.AddRange(this.LocalMacroNames);
-			
+
 				foreach (var context in Enum.GetValues(typeof(Package.ContextType)).OfType<Package.ContextType>())
 				{
 					var items = this.Package.GetSelectedItems(context).ToArray();
@@ -43,10 +43,10 @@ namespace Microsoft.VisualXpress
 
 		public string[] BuiltinMacroNames
 		{
-			get 
+			get
 			{
 				List<string> names = new List<string>();
-				foreach (FieldInfo fieldInfo in typeof(Microsoft.VisualXpress.Properties).GetFields(BindingFlags.Static|BindingFlags.Public))
+				foreach (FieldInfo fieldInfo in typeof(Microsoft.VisualXpress.Properties).GetFields(BindingFlags.Static | BindingFlags.Public))
 				{
 					if (fieldInfo.FieldType == typeof(string) && fieldInfo.IsLiteral)
 						names.Add(fieldInfo.GetValue(null) as string);

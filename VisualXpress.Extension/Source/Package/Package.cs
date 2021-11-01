@@ -36,7 +36,7 @@ namespace Microsoft.VisualXpress
 		private const string KeyBindingName = "VisualXpress.KeyBinding";
 		public const string SolutionOptionsKey = "VisualXpress.Solution";
 
-		private Dictionary<string, string> m_Properties = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
+		private Dictionary<string, string> m_Properties = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 		private List<CommandBarControl> m_Controls = new List<CommandBarControl>();
 		private List<CommandBar> m_CommandBars = new List<CommandBar>();
 		private List<KeyBindingInfo> m_KeyBindings = new List<KeyBindingInfo>();
@@ -282,7 +282,7 @@ namespace Microsoft.VisualXpress
 				{
 					foreach (var property in settings.PropertyGroup.Properties)
 					{
-						Dictionary<string,string> properties = new Dictionary<string,string>(StringComparer.CurrentCultureIgnoreCase);
+						Dictionary<string,string> properties = new Dictionary<string,string>(StringComparer.InvariantCultureIgnoreCase);
 						if (m_Properties.ContainsKey(property.Name))
 							properties[property.Name] = m_Properties[property.Name];
 
@@ -620,8 +620,9 @@ namespace Microsoft.VisualXpress
 		{
 			try
 			{
+				ThreadHelper.ThrowIfNotOnUIThread();
 				string galleryKeyName = String.Format("ExtensionManager\\Repositories\\{{{0}}}", GuidList.GuidVisualXpressExtensionGalleryString);
-				string galleryFile = this.GetPropertyValue(Package.ExtensionGalleryProperty);
+				string galleryFile = this.ExpandText(this.GetPropertyValue(Package.ExtensionGalleryProperty));
 				if (String.IsNullOrEmpty(galleryFile))
 				{
 					Log.Verbose("VerifyExtensionGallery skipping unspecified gallery file {0}", Package.ExtensionGalleryProperty);	
@@ -906,7 +907,7 @@ namespace Microsoft.VisualXpress
 				if (String.IsNullOrEmpty(name))
 					return "";
 			
-				visited = new HashSet<string>(visited ?? new HashSet<string>(), StringComparer.CurrentCultureIgnoreCase);
+				visited = new HashSet<string>(visited ?? new HashSet<string>(), StringComparer.InvariantCultureIgnoreCase);
 				if (visited.Contains(name))
 					return "";
 			
@@ -1275,7 +1276,7 @@ namespace Microsoft.VisualXpress
 
 		public IEnumerable<string> GetRootFolders(IEnumerable<string> paths)
 		{
-			SortedSet<string> folders = new SortedSet<string>(Comparer<string>.Create((a, b) => String.Compare(a, b, StringComparison.CurrentCultureIgnoreCase)));
+			SortedSet<string> folders = new SortedSet<string>(Comparer<string>.Create((a, b) => String.Compare(a, b, StringComparison.InvariantCultureIgnoreCase)));
 			foreach (string path in paths)
 			{
 				if (File.Exists(path))
@@ -1288,7 +1289,7 @@ namespace Microsoft.VisualXpress
 			Stack<string> result = new Stack<string>();
 			foreach (string path in folders)
 			{
-				if (result.Count == 0 || String.Format("{0}\\", path).StartsWith(String.Format("{0}\\", result.Peek()), StringComparison.CurrentCultureIgnoreCase) == false)
+				if (result.Count == 0 || String.Format("{0}\\", path).StartsWith(String.Format("{0}\\", result.Peek()), StringComparison.InvariantCultureIgnoreCase) == false)
 					result.Push(path);
 			}
 			return result;
@@ -1313,7 +1314,7 @@ namespace Microsoft.VisualXpress
 			ThreadHelper.ThrowIfNotOnUIThread();
 
 			// Include the active document if needed
-			SortedSet<string> selection = new SortedSet<string>(Comparer<string>.Create((a, b) => String.Compare(a, b, StringComparison.CurrentCultureIgnoreCase)));
+			SortedSet<string> selection = new SortedSet<string>(Comparer<string>.Create((a, b) => String.Compare(a, b, StringComparison.InvariantCultureIgnoreCase)));
 			if (context.HasFlag(ContextType.Document))
 			{
 				selection.Add(this.ActiveItemPath);

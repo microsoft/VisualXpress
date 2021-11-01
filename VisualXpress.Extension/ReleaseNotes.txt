@@ -1,5 +1,13 @@
 VisualXpress Release Notes
 
+[Version 2.11.4.0]
+* Adding support to "Diff Against Have Revision" for properly comparing file as target of
+  opened move operation
+* Fixing culture specific file path comparisons to be invariant across machines
+
+[Version 2.11.3.0]
+* Fixing property expansion when setting VisualXpressExtensionGallery
+
 [Version 2.11.2.0]
 * Significant reduction in startup time for commands using p4v such as showing
   file history, revgraph, timelapse. To get the best startup performance, the 

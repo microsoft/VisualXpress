@@ -95,28 +95,29 @@ namespace Microsoft.VisualXpress
 		public static PluginCommand Create(Package package, string name)
 		{
 			if (String.IsNullOrEmpty(name))
+			{
 				return null;
+			}
 
-			var cmd = (from t in Assembly.GetExecutingAssembly().GetTypes()
-					   let at = t.GetCustomAttributes(false).OfType<PluginCommandAttribute>().FirstOrDefault()
-					   where at != null && String.Compare(at.Name, name, StringComparison.CurrentCultureIgnoreCase) == 0
-					   select new { Type = t, CommandAttribute = at }).FirstOrDefault();
+			Type cmdType = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(t => 
+				t.GetCustomAttributes(false).OfType<PluginCommandAttribute>().Any(
+				at => String.Compare(at.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0));
 
-			if (cmd == null)
+			if (cmdType == null)
 			{
 				Log.Error("Invalid command name {0}", name);
 				return null;
 			}
 				
-			PluginCommand icmd = cmd.Type.GetConstructor(System.Type.EmptyTypes).Invoke(null) as PluginCommand;
-			if (icmd == null)
+			PluginCommand cmd = cmdType.GetConstructor(System.Type.EmptyTypes).Invoke(null) as PluginCommand;
+			if (cmd == null)
 			{
 				Log.Error("Invalid command handler for {0}", name);
 				return null;
 			}
 
-			icmd.Package = package;
-			return icmd;
+			cmd.Package = package;
+			return cmd;
 		}
 	}
 
@@ -144,27 +145,25 @@ namespace Microsoft.VisualXpress
 			return m_Flags.ContainsKey(flag);
 		}
 
-		public T GetFlag<T>(string flag, int index = 0)
+		public string GetFlagValue(string flag, int index = 0)
 		{
-			List<string> values;
-			if (m_Flags.TryGetValue(flag, out values) == true && values.Count > 0)
-				try { return (T)Convert.ChangeType(values[0], typeof(T)); } catch {}
-			return default(T);
+			List<string> values = GetFlagValues(flag);
+			return values?.Count > index ? values[index] : null;
 		}
 
 		public int GetFlagValueCount(string flag)
 		{
-			List<string> values;
-			if (m_Flags.TryGetValue(flag, out values) == true)
-				return values.Count;
-			return 0;
+			List<string> values = GetFlagValues(flag);
+			return values != null ? values.Count : 0;
 		}
 
 		private List<string> GetFlagValues(string flag)
 		{
 			List<string> values;
-			if (m_Flags.TryGetValue(flag, out values) == true)
+			if (m_Flags.TryGetValue(flag, out values))
+			{
 				return values;
+			}
 			return null;
 		}
 
@@ -176,7 +175,9 @@ namespace Microsoft.VisualXpress
 
 			var optionAttributes = new Dictionary<string, PluginCommandOptionAttribute>();
 			foreach (var optionAttribute in cmd.GetType().GetCustomAttributes(true).OfType<PluginCommandOptionAttribute>())
+			{
 				optionAttributes[optionAttribute.Name] = optionAttribute;
+			}
 
 			int index = 0;
 			while (index < args.Length)
@@ -184,7 +185,9 @@ namespace Microsoft.VisualXpress
 				string flagName = args[index];
 				PluginCommandOptionAttribute optionAttribute;
 				if (optionAttributes.TryGetValue(flagName, out optionAttribute) == false)
+				{
 					break;
+				}
 
 				index++;
 				int argEnd = index+optionAttribute.ArgumentCount;
@@ -196,7 +199,9 @@ namespace Microsoft.VisualXpress
 				
 				List<string> flagArgs = new List<string>();
 				while (index < argEnd)
+				{
 					flagArgs.Add(args[index++].Trim());
+				}
 
 				ops.m_Flags[flagName] = flagArgs;
 			}

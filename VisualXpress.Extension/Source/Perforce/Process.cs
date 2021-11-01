@@ -310,7 +310,7 @@ namespace Microsoft.VisualXpress.Perforce
 			get
 			{
 				// Append connections from P4V settings
-				var connections = new SortedDictionary<string, Config>(StringComparer.CurrentCultureIgnoreCase);
+				var connections = new SortedDictionary<string, Config>(StringComparer.InvariantCultureIgnoreCase);
 				foreach (var c in P4vConnections)
 					connections[c.ToConnectionString()] = c;
 				
@@ -319,7 +319,7 @@ namespace Microsoft.VisualXpress.Perforce
 				if (String.IsNullOrEmpty(config.Port) == false && String.IsNullOrEmpty(config.Client) == false && String.IsNullOrEmpty(config.User) == false)
 					connections[config.ToConnectionString()] = config;
 
-				var ports = new SortedDictionary<string, Config>(StringComparer.CurrentCultureIgnoreCase);
+				var ports = new SortedDictionary<string, Config>(StringComparer.InvariantCultureIgnoreCase);
 				foreach (var c in connections.Values)
 					ports[c.Port] = c;
 				
@@ -332,7 +332,7 @@ namespace Microsoft.VisualXpress.Perforce
 					{
 						if (String.IsNullOrEmpty(n.Client))
 							continue;
-						if (String.IsNullOrEmpty(n.Host) == false && String.Compare(n.Host, System.Environment.MachineName, StringComparison.CurrentCultureIgnoreCase) != 0)
+						if (String.IsNullOrEmpty(n.Host) == false && String.Compare(n.Host, System.Environment.MachineName, StringComparison.InvariantCultureIgnoreCase) != 0)
 							continue;
 						Config clientConfig = new Config(c);
 						clientConfig.Client = n.Client;
@@ -341,7 +341,7 @@ namespace Microsoft.VisualXpress.Perforce
 				}
 
 				// Ensure the connection names are consistent, possibly removing duplicates
-				var normConnections = new SortedDictionary<string, Config>(StringComparer.CurrentCultureIgnoreCase);
+				var normConnections = new SortedDictionary<string, Config>(StringComparer.InvariantCultureIgnoreCase);
 				foreach (var c in connections.Values)
 				{
 					Config nc = NormalizeConnection(c);
@@ -555,7 +555,7 @@ namespace Microsoft.VisualXpress.Perforce
 
 		public class NodeBase
 		{
-			protected Dictionary<string, string> m_Fields = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
+			protected Dictionary<string, string> m_Fields = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
 			public T GetValue<T>(string field)
 			{

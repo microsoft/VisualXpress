@@ -212,23 +212,20 @@ namespace Microsoft.VisualXpress
         private void SetControlCheckedState(String tag, bool defaultValue = false)
         {
             var Source = FindCommandBarButton(tag);
-
             if (Source == null)
             {
                 Log.Error($"Failed to find {typeof(CommandBarButton)} using tag, '{tag}'");
                 return;
             }
 
-            var Value = GetValue(tag, defaultValue);
-
+            bool Value = GetValue(tag, defaultValue);
             Source.Picture = Value ? Resource.PictureCheck as stdole.StdPicture : null;
-
             Package.UpdateButtonStyle(Source);
         }
 
         private bool GetTagDefault(PluginCommandOptions options, out String tag, out bool defaultValue)
         {
-            tag = options.GetFlag<String>(OptionNameBuildTag);
+            tag = options.GetFlagValue(OptionNameBuildTag);
             defaultValue = false;
 
             if (String.IsNullOrWhiteSpace(tag))
@@ -236,8 +233,7 @@ namespace Microsoft.VisualXpress
                 return false;
             }
 
-            var DefaultValueRaw = options.GetFlag<String>(OptionNameDefaultValue);
-
+            var DefaultValueRaw = options.GetFlagValue(OptionNameDefaultValue);
             if (!String.IsNullOrEmpty(DefaultValueRaw))
             {
                 bool.TryParse(DefaultValueRaw, out defaultValue);
@@ -253,8 +249,7 @@ namespace Microsoft.VisualXpress
                 yield break;
             }
 
-            var Values = options.GetFlag<String>(flag);
-
+            var Values = options.GetFlagValue(flag);
             if (String.IsNullOrEmpty(Values))
             {
                 yield break;

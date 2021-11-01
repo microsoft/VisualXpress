@@ -17,21 +17,31 @@ namespace Microsoft.VisualXpress
 			List<Perforce.FStatResult.Node> fileNodes = new List<Perforce.FStatResult.Node>();
 
 			Perforce.FStatResult fstat = Perforce.Process.FStat(options.Arguments);
-			foreach (var file in options.Arguments)
+			foreach (string file in options.Arguments)
 			{
 				Perforce.FStatResult.Node node = fstat.FindNode(file);
 				if (node == null || node.InDepot == false)
+				{
 					Log.Error("File not found in depot: {0}", file);
-				else
-					fileNodes.Add(node);
+					continue;
+				}
+
+				fileNodes.Add(node);
 			}
 
-			foreach (var fileNode in fileNodes)
+			foreach (Perforce.FStatResult.Node fileNode in fileNodes)
 			{
 				// Unlikely to be configured to use P4vc diffhave
 				if (options.HasFlag(OptionNameUseP4V))
 				{
 					PluginCommandCompare.ExecuteP4vcFileCommand("diffhave", fileNode.ClientFile);
+					continue;
+				}
+
+				// If this is the target of a move, diff versus the source of the move
+				if (String.IsNullOrEmpty(fileNode.MovedFile) == false && fileNode.MovedRev > 0)
+				{
+					PluginCommandCompare.ExecuteFileCompare(String.Format("{0}#{1}", fileNode.MovedFile, fileNode.MovedRev), false, fileNode.ClientFile, true);
 					continue;
 				}
 

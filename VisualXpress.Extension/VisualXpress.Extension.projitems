@@ -98,6 +98,7 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\Publish-RC.bat" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Publish.bat" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Uninstall.bat" />
+    <None Include="$(MSBuildThisFileDirectory)VisualXpress.vsct" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\checkout.png" />

@@ -257,7 +257,7 @@ namespace Microsoft.VisualXpress.Deploy
 				XmlElement idElem = entryElem.SelectSingleNode("*[local-name()='Vsix']/*[local-name()='Id']") as XmlElement;
 				if (idElem == null)
 					continue;
-				if (String.Compare(idElem.InnerText, packageId, StringComparison.CurrentCultureIgnoreCase) == 0)
+				if (String.Compare(idElem.InnerText, packageId, StringComparison.InvariantCultureIgnoreCase) == 0)
 					return entryElem;
 			}
 			return null;

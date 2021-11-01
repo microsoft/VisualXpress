@@ -72,7 +72,7 @@ namespace Microsoft.VisualXpress
 			int i = 0;
 			for (; i < sourceFolderTokens.Length && i < pathTokens.Length; ++i)
 			{
-				if (String.Compare(pathTokens[i], sourceFolderTokens[i], StringComparison.CurrentCultureIgnoreCase) != 0)
+				if (String.Compare(pathTokens[i], sourceFolderTokens[i], StringComparison.InvariantCultureIgnoreCase) != 0)
 					break;
 			}
 			if (i > 0)
