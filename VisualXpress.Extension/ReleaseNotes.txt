@@ -4,6 +4,8 @@ VisualXpress Release Notes
 * Adding support to "Diff Against Have Revision" for properly comparing file as target of
   opened move operation
 * Fixing culture specific file path comparisons to be invariant across machines
+* Fixing multi-version installation & uninstallation scripts to use Visual Studio installer 
+  for 2017 and later
 
 [Version 2.11.3.0]
 * Fixing property expansion when setting VisualXpressExtensionGallery
