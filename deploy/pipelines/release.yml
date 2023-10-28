@@ -1,0 +1,60 @@
+
+pool:
+  name: 'TC Internal'
+
+variables:
+  publishArtifactName: 'signed'
+  publishScriptName: $[ coalesce(variables.pipelinePublishScriptName, 'Publish-RC.bat') ]
+
+resources:
+  repositories:
+    - repository: 'TcTemplates'
+      type: 'git'
+      name: 'The Coalition/TcTemplates'
+      ref: 'refs/heads/main'
+
+stages:
+- stage: CI
+  jobs:
+  - template: templates/build.yml
+    parameters:
+      symbols: true
+      artifacts: true
+
+- stage: CodeSign
+  jobs:
+  - template: templates/codesign.yml@TcTemplates
+    parameters:
+      inputArtifact: 'drop'
+      outputArtifact: '$(publishArtifactName)'
+      esrpKeyCode: 'CP-233016'
+      esrpSignOperation: 'OPCSign'
+      files:
+        - '2022/VisualXpress.2022.vsix'
+        - '2019/VisualXpress.2019.vsix'
+        - '2017/VisualXpress.2017.vsix'
+
+- stage: CD
+  jobs:
+  - job: Publish
+    workspace:
+      clean: all
+      
+    steps:
+    - download: current
+      displayName: 'Download Artifacts'
+      artifact: '$(publishArtifactName)'
+
+    - task: CopyFiles@2
+      displayName: 'Copy Deployment'
+      inputs:
+        sourceFolder: '$(Pipeline.Workspace)/$(publishArtifactName)'
+        contents: '**'
+        targetFolder: 'intermediate/staging'
+
+    - task: BatchScript@1
+      displayName: 'Publish'
+      inputs:
+        filename: 'source/VisualXpress.Extension/Scripts/$(publishScriptName)'
+        arguments: '/q'
+

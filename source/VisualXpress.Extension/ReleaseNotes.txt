@@ -1,0 +1,477 @@
+VisualXpress Release Notes
+
+[Version 2.12.6.0]
+* Fixing possible block of main thread while execution VisualXpress commands
+  that are not intended to be waited on.
+
+[Version 2.12.5.0]
+* Fixing possible deadlock opening VisualXpress About window early in startup
+
+[Version 2.12.4.0]
+* Fixing bug indicating the current selected perforce connection from
+  a list of possible connections. Commonly found in connection menu.
+
+[Version 2.12.3.0]
+* Fixing DISP_E_EXCEPTION in checkout command from possible call to 
+  SwitchToMainThreadAsync when not running in JoinableTaskFactory thread
+* Changes to DevOps build pipeline to support codesign release
+
+[Version 2.12.2.0]
+* Moving copyright header command to Coalition menu.
+
+[Version 2.12.0.0]
+* Perforce connection selection refactor to reduce number of possible connections
+  shown and improve the quality of the selection (favorites, recent, etc)
+
+[Version 2.11.6.0]
+* F5 Debugging setup fixes:
+* Error message boxes now show error icon to make it clearer that something went wrong
+* Wrap the GDK build path with quotes in case the path has a space separator
+
+[Version 2.11.5.0]
+* Adding option for the user to point to a cooked build directory and setup F5 debugging 
+  for it. For Win64 and WinGDK
+* Added support for p4 ops to be run on dev-ue5-epic and ue5-release-5.2 branches
+* Added PluginCommand CheckCopyrights, also added settings for log output location
+
+[Version 2.11.4.0]
+* Adding support to "Diff Against Have Revision" for properly comparing file as target of
+  opened move operation
+* Fixing culture specific file path comparisons to be invariant across machines
+
+[Version 2.11.3.0]
+* Fixing property expansion when setting VisualXpressExtensionGallery
+
+[Version 2.11.2.0]
+* Significant reduction in startup time for commands using p4v such as showing
+  file history, revgraph, timelapse. To get the best startup performance, the 
+  p4v process's P4 environment variables also needed to be set, not just on cmd line.  
+
+[Version 2.11.1.0]
+* Enabling and fixing all code analysis warnings to correct issues calling UI functions
+  from a thread other than the main thread
+* Enabling warnings as errors, all configurations, no project warning exclusions
+* Adding custom vsixmanifest build operation to automatically include the application
+  version as defined within a shared AssemblyInfo.cs. This version is also used as the 
+  assembly version for VisualXpress
+
+[Version 2.11.0]
+* Major refactor of VisualXpress projects to migrated to Visual Studio 2022 project 
+  with version specific VSSDK packages supporting 2017 (x86), 2019 (x86), and 2022 (x64).
+  This also introduces VS version specific private gallery, which we can automatically
+  path using $(VisualStudioEditionYear) when expanding $(VisualXpressExtensionGallery).
+  The build root for the gallery to deploy is created within ".\intermediate\deploy\..."
+
+[Version 2.10.3]
+* VisualXpress extension support for Visual Studio 2022 Preview 6
+
+[Version 2.10.2]
+* VisualXpress extension support for Visual Studio 2022
+
+[Version 2.10.1]
+* Fixing bug connecting to a Perforce server over SSL
+* Updating to .NET Framework 4.7.2 for long path support by default
+* Updating VSSDK packages to latest VS 2017
+* Addition of VisualXpress.UnitTest project with a couple simple new tests
+
+[Version 2.10.0]
+* Initial open source release to GitHub [https://github.com/microsoft/VisualXpress]
+* Migrating Nuget packages.config to PackageReference
+
+[Version 2.9.27]
+* Fixing bug where p4vc.exe could be incorrectly located and used on machine
+  outside of perforce installation folder
+
+[Version 2.9.26]
+* Adding support for P4V 2021.1 and the removal of p4vc.exe. This change is
+  backwards compatible with P4V 2020 versions.
+
+[Version 2.9.25]
+* Fixing "Open User Settings" command to correctly open path with spaces
+* Addition of UE5 menu commands for perforce operations
+* Removing Gears MegaXGE build menu items from global config
+
+[Version 2.9.24]
+* Adding work-around for behaviour 16.8 which caused the VisualXpress toolbar 
+  visibility state to be invisible, and not persist after closing/opening VS.
+
+[Version 2.9.23]
+* Fixing unspecified exception on commands when "Save All Documents" is enabled
+* Fixing development PostBuild install to handle uninstallation of previous VS versions
+
+[Version 2.9.22]
+* Fixing PluginCommands previously using "p4v.exe -cmd" for displaying history and revgraph.
+  As of P4V 2020.2 it is no longer supported. "p4vc.exe" commands are used now.
+* Fixing "Reconcile - UE4" command to include common new source folders
+* Addition of command "XboxOne GDK Command Prompt Here.."
+
+[Version 2.9.21]
+* Fixing bug where VisualXpress could sometimes delete the local temp file used by
+  the external diff tool, before the intended process has loaded it.
+
+[Version 2.9.20]
+* Fixing async package loading race where VisualXpress could ignore perforce configuration
+  from solution options if initialized after solution load
+
+[Version 2.9.19]
+* Added new "The Coalition" submenu with common Diff vs branch utilities
+* Fixing bug where local readonly temp file for diff would fail to delete
+
+[Version 2.9.18]
+* The prevdiff command, used by "Diff Against Have Revision", now follows pending 
+  integration history of files open for add when deriving previous revision to use
+  for diff. This is helpfull for comparing changes after integrating files as add with
+  edit to a new path, either resolved or unresolved.
+* Pruning the menu items for diff versus UE4 releases
+* The "Reconcile: UE4" menu option now includes TheCoalition Plugins and ReferenceGame
+
+[Version 2.9.17]
+* Now using VisualStudio.Setup.Configuration.Interop to find IDE install paths for
+  build deployments
+* Fixing undefined scheduler usage for StatusBar timings
+* PluginCommandCompare now supports using both search/replace and branch together.
+  The matching branch view mapping takes precedence. The p4-contoso server now
+  contains a branchspec "visualxpress_to_ue4_main" which is used for the command
+  "Perforce - Diff vs UE4/Main". This allows us to customize specific file mappings
+  as needed, such as when files are moved in //UE4/Main/...
+  
+[Version 2.9.16]
+* Multiple fixes for async UI operations executing on main thread. This builds on
+  release candidate changes for VS 2019 with AsyncPackage support.
+
+[Version 2.9.15]
+* Fixing AsyncPackage logging to VisualXpress OutputPanel and StatusBar messages
+* Dropping support for Visual Studio 2013
+
+[Version 2.9.14]
+* VisualXpress Package ported to use AsyncPackage to facilitate faster startup
+  times for Visual Studio. This also avoids a default warning on VS 2019.1
+  
+[Version 2.9.13]
+* Fix plugin perforce compare operation to use correct encoding for temporary 
+  depot text files
+
+[Version 2.9.12]
+* Support for Visual Studio 2019
+
+[Version 2.9.11]
+* Add option to automatically edit or add files on save.
+* Removed caching for BuildConfiguration.xml that can cuase problems with an existing
+  BuildConfiguration that won't get reloaded without a restart of Visual Studio.
+
+[Version 2.9.10]
+* Fix for default bGenerateMAPFiles option not matching changes to BuildConfiguration.cs
+* Adding new UE4 submenu options for Diff vs 4.22
+
+[Version 2.9.9]
+* Adding support for new property $(VisualStudioEditionYear) which is now used
+  for opening XDK command prompt with matching VS enviroment
+
+[Version 2.9.8]
+* Log messages in the status bar are now displayed for at least a certain
+  amount of time before being replaced (currently 5 seconds). Log messages
+  from VisualXpress will always replace older VisualXpress messages immediately.
+
+[Version 2.9.7]
+* New option to write additional verbose logging to output panel
+* Addition of support for logging messages to the Visual Studio status bar. 
+  Many of the existing perforce commands will now display summary output messages 
+  to status bar.
+* Fixing incorrect placement of separator above or below menu items when specifying 
+  attribute InsertBefore or InsertAfter
+
+[Version 2.9.6]
+* Moving "Perforce - Connection" menu item next to other main Perforce commands
+
+[Version 2.9.5]
+* Fixing bug causing possible duplicate connection entries to be displayed with 
+  different P4PORT when opening empty Visual Studio and before selecting a connection.
+
+[Version 2.9.4]
+* Fixing bug so that the exact specified perforce connection settings are used when
+  displaying configuration and executing perforce commands. This fixes issues where
+  perforce server 'info' results do no match host's current DNS results. This bug
+  may also cause duplicate connection entries to be displayed with different P4PORT.
+* Adding clipboard plugin command options for copying a new guid (with optional format),
+  copying perforce depot path, and copying folder path.
+
+[Version 2.9.3]
+* Remapped debug fast link options to match the changes in UBT. bUseFastPDBLinking
+  turns Fastlink on for all monolithic build targets (UWP, XBox, Win64 Client, Server) 
+  for all configs and bUseFastPDBLinkingForTest only turns it on for the Test config
+* Addition of menu item setting InsertBefore, as well as support for preserving
+  separator below InsertAfter item and separator above InsertBefore item. This 
+  makes for an easier way to insert items around existing separators.
+* Removing error message when loading empty user settings file
+
+[Version 2.9.2]
+* Removed Incremental Linking / Debug FastLink 'disables' dependency as they
+  can be used together without issue now.
+
+[Version 2.9.1]
+* Fixed the command "Visual Studio Command Prompt Here..." to correctly launch
+  with working directory as $(ItemPath). Bug was introduced in VS 15.5
+* Changed the menu item label of shortcut keys for "Perforce - Checkout" and 
+  "Perforce - Checkout Modified" to not appear to require "Shift". 
+
+[Version 2.9.0]
+* Adding new VisualXpress user option to "Preserve debugger symbol settings with solution".
+  This will enable VisualXpress to save & restore, within the solution options, some of 
+  the current Visual Studio "Debugging -> Symbols" settings. These include the symbol 
+  settings: IsManualLoad, IsLoadAdjacent, UseMSSymbolServers
+
+[Version 2.8.8]
+* Fixing Hidden attribute on menu commands in the settings file to have effect. 
+* Fixing support for specifying a local file path for a 16x16 image on a menu command 
+  Image attribute
+* Adding support to override settings on a PluginCommand with options for a SystemCommand, 
+  and vise-versa. Includes more general fixes for overriding menu item properties
+  explicitly set in user settings file regardless of default values.
+
+[Version 2.8.7]
+* Fix for allow Menu element in user settings file to have no title, and assume
+  to inherit global Menu element settings. Prevents "UNKNOWN" commandbar
+* SystemCommand processes now inherit the current Perforce environment. This is
+  especially usefull for "Command Prompt Here" and "XDK Command Prompt Here"
+
+[Version 2.8.5]
+* Support for UE4 bGenerateMAPFiles (Generate MAP Files) build option.
+* Fixing compiler warnings in MegaXGE UI.
+* Support for disabling UE4 Incremental Linking build option when enabling Fast 
+  Link and vice versa.
+
+[Version 2.8.4]
+* Modifying VisualXpress build to use nuget packages and updated VS 15.3 Interop
+  assemblies. Dropping support for Visual Studio 2012.
+
+[Version 2.8.3]
+* Fixing VisualXpress output panel creation to be visible and inactive so that 
+  the log text can be shown if selected manually 
+
+[Version 2.8.2]
+* Improving extension startup performance by delaying output panel creation
+  untill when needed. Brings load Inclusive Cost to roughly 1 sec. See the 
+  ActivityLog.xml after running with /log switch for local timing.
+
+[Version 2.8.1]
+* Adding new builtin properties [ContextDir, ContextPath, ContextFileName, ContextTitle,
+  ContextFolders, ContextFiles] which can be used for easier context sensitive commands. 
+  Now used to define a single Perforce reconcile command to use everywhere
+* Adding support to override or hide global commands from the User Settings File.
+  This makes it simple to just duplicate a command in your user settings file with a 
+  customized ShortcutKey or customized arguments.
+
+[Version 2.8.0]
+* Fixing VisualXpress toolbar so that any customization of the placement or 
+  visibility now persists as expected
+
+[Version 2.7.8]
+* Addition of Environment Variable editing option to support viewing and modifying 
+  the current devenv.exe process environment
+
+[Version 2.7.7]
+* Fixing issue where MegaXGE dialog is difficult to read with 'Dark' theme enabled.
+
+[Version 2.7.6]
+* Fixing bug where modal windows would become unresponsive under certain conditions.
+
+[Version 2.7.5]
+* Exposing some common UnrealBuildTool settings under UE4 submenu
+* Fixing 'XboxOne XDK Command Prompt Here' shortcut to [Ctrl+K, Ctrl+X]
+
+[Version 2.7.3]
+* UE4 MegaXGE build commands included under UE4 submenu
+* Minor WPF changes for text readability and window modality
+
+[Version 2.7.2]
+* Adding plugin commands for p4v history, revgraph and timelapse which can
+  also support regex search/replace on the item path
+* Adding new UE4 submenu options for 'History in UE4/Main', 'Revision Graph in UE4/Main'
+  and 'Timelapse in UE4/Main'
+* Converting existing global options calling p4v.exe to use new plugin commands
+* Adding new UE4 submenu options for Diff vs 4.14, 4.15, and 4.16
+
+[Version 2.7.1]
+* The current perforce connection settings will now be saved within the local
+  solution options file (.suo) and will be restored when solution is opened.
+
+[Version 2.7.0]
+* Added support for Visual Studio 2017
+
+[Version 2.6.2]
+* Fixing bug where Property elements in a VisualXpress settings file would be ignored
+  if there was no Menu elements present
+
+[Version 2.6.1]
+* Fixing bug where changing the current perforce configuration in from the Options Dialog 
+  does not change the checkmark on the current connection in the Connections submenu. 
+  The previous connection still has the checkmark.
+* Fixing crash when running macros display command without a solution loaded
+
+[Version 2.6.0]
+* The VisualXpress extension gallery feed is now automatically set using the optional
+  VisualXpressExtensionGallery property in the global config file
+* Removing p4 reconcile -I flag usage from reconcile command so that system P4IGNORE
+  files can be used in together with the VisualXpress P4IGNORE property
+
+[Version 2.5.12]
+* Sparta menu commands renamed to UE4 since they support common Gears UE4 solutions
+* Addition of diff option for UE4 4.12 and 4.13
+
+[Version 2.5.11]
+* Fixing P4 environment variable expansion in config script to use current value
+  from VisualXpress connection before falling back to process environment
+* Added menu command 'XboxOne XDK Command Prompt Here'
+
+[Version 2.5.10]
+* Fixing p4v -cmd usage in global settings to handle file paths with spaces
+
+[Version 2.5.9]
+* Addition of sparta diff option for UE4 4.11 and update path for UE4 Main
+
+[Version 2.5.8]
+* Additional common P4IGNORE expressions added for new VS 2015 files
+
+[Version 2.5.7]
+* Fixing bug with shortcut key bindings being removed during automatic hot-reload of 
+  CurrentSettings.vssettings in Visual Studio 2015 
+
+[Version 2.5.6]
+* Fixing bug where other extensions or old user settings could override VisualXpress
+  config file assigned shortcut keys
+
+[Version 2.5.5]
+* Fixing reconcile plugin command to ignore adding directories and junctions
+
+[Version 2.5.4]
+* Global settings icon updates for some perforce related commands
+
+[Version 2.5.3]
+* Global settings fix for create new guid command
+* Global settings addition of sparta diff vs UE4 4.8
+
+[Version 2.5.2]
+* Re-enabling ShowInToolbar support for Visual Studio 2015 (14.0.23023.0 D14REL)
+  The VS team fixed this bug that I reported: http://bit.ly/1Ibun9K
+
+[Version 2.5.1]
+* Disabling ShowInToolbar support for Visual Studio 2015 CPT until they fix OLE pictures
+
+[Version 2.5.0]
+* Added support for Visual Studio 2015
+
+[Version 2.4.5]
+* Added 'Build Startup Project(s)' menu item [Global::Ctrl+Shift+F7] which will build the current
+  startup project(s) in the solution
+* Added 'Perforce Time-lapse View' and 'Perforce Show in P4V'
+* Tweaked the order and naming of Perforce menu items to match P4V
+
+[Version 2.4.4]
+* Fixing revert -f option to force client file back to #have revision instead of #head
+* Adding more error handling feedback to p4v and file compare plugin commands
+
+[Version 2.4.3]
+* Addition of 'VisualStudio Command Prompt Here...' menu item [Global::Ctrl+K, Ctrl+R] which will
+  open a command prompt with current Visual Studio version of VsDevCmd.bat variables setup
+* Addition of VisualStudio IDE related macros:
+  $(VisualStudioDevEnvPath), $(VisualStudioDevEnvFolder), $(VisualStudioInstallFolder)
+
+[Version 2.4.2]
+* Addition of macros plugin command to display names and values of all macros depending on selection
+* Fixing bug where user is unable to checkout certain file types from solution explorer context menu
+
+[Version 2.4.1]
+* Fixing bug with connection name normalization caused by unconventional p4 set results
+
+[Version 2.4.0]
+* Fixing support for p4v 2014.2 by removing use of "favorite connections". All available clients 
+  for a user & host for every known port will be listed. 
+* Windows 10 compatibility fix for possible limited permission VisualXpressSettings.xml file access  
+
+[Version 2.3.4]
+* Fix duplicate Perforce connections from being listed twice when server has multiple DNS names.
+
+[Version 2.3.3]
+* Support for ShowInMainMenu property to allow creation of commands not shown in main menu
+* Added a context menu item to reconcile the selected items only, great for reconciling selected projects.
+* Fixed bug with VisualXpress Output pane not being created if not set to always activate
+
+[Version 2.3.2]
+* Fixed bug with old user keyboard bindings overriding VisualXpress.
+* Added clipboard plugin command along with [Ctrl+Shift+C] to copy uncoloured
+* Global VisualXpress reconcile now ignores *.nvf files
+* VisualXpress now displays important command info on status bar
+* Removing mutex lock on Log device writes and now always queue output on UI thread
+* Fixing connections submenu refreshing to always run on UI thread
+
+[Version 2.3.1]
+* Added Delta options to diff against different gears versions
+* Fixed a bug merging existing SubMenu's from user setting file 
+
+[Version 2.3.0]
+* Added checkout plugin command support to checkout modified open documents
+* Add new menu option 'Checkout Modified' [Ctrl+!] to checkout modified open documents
+
+[Version 2.2.9]
+* Fixing bug in VisualXpress option page to preserve unapplied settings while browsing
+* Perforce connection ComboBox in option page is now asynchronous
+
+[Version 2.2.8]
+* Created dedicated output window panel for VisualXpress
+* Added VisualXpress option page found under menu 'Tools -> Options'
+* Added option to disable activation of output window on every log output
+* Added option to select or create perforce connection
+
+[Version 2.2.7]
+* Fixing slow performance of compare against a depot filespec
+
+[Version 2.2.6]
+* Fixing bug with p4 print usage in file compare that may show extra byte encoding characters at top of file
+* Adding sparta diff versus ue4 releases and mirror
+
+[Version 2.2.5]
+* Fixing bug with perforce working directory for P4CONFIG
+
+[Version 2.2.2]
+* Fixing bug parsing perforce stdout mixed with stderr
+* [Ctrl+D] now performs diff vs previous for active document
+* Perforce connection menu now includes option for opening custom connection
+
+[Version 2.2.1]
+* Fixing bug unregistering keyboard shortcuts during a refresh
+* Fixing bug with duplicating key binding for context menu commands
+
+[Version 2.2.0]
+* Fixing Checkout and Revert commands to work properly on paths with spaces 
+
+[Version 2.1.9]
+* Added support for key binding to menu commands using ShortcutKey attribute
+* [Ctrl+~] is now global shortcut to checkout file
+* [Ctrl+K, Ctrl+R] is now global shortcut to open command prompt here
+* Changed perforce connection selection to effect only environment instead of global
+
+[Version 2.1.8]
+* Fixing Delta script *.u file deletion so it's relative to the $(SolutionDir)
+
+[Version 2.1.7]
+* Common Delta and Sparta menu options added to default configuration
+
+[Version 2.1.6]
+* removing automatic double-quotes around expanded properties to fix concatenation issues
+
+[Version 2.1.5]
+* fixing on-demand expansion of config properties to support context variables
+* adding project and solution context variables
+
+[Version 2.1.4]
+* addition of About plugin command with WPF window and Release Notes
+* updating reconcile icon
+
+[Version 2.1.3 and earlier]
+* icons changed to Microsoft Visual Studio image library resources
+* create user settings file on-demand for edit if it doesn't exist
+* adding p4v history toolbar button
+* providing enhanced P4 environment variable access using config or info
+* allow icon images to be loaded from file path as well as embedded assembly
+* configs for install and publish so that we can compile without installing and/or publishing
+* p4 ignore config update

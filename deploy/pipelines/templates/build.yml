@@ -1,0 +1,71 @@
+
+parameters:
+- name: solution
+  displayName: 'Solution'
+  type: string
+  default: 'source/VisualXpress.sln'
+
+- name: platform
+  displayName: 'Platform'
+  type: string
+  default: 'Any CPU'
+
+- name: configuration
+  displayName: 'Configuration'
+  type: string
+  default: 'Release'
+
+- name: symbols
+  displayName: 'Publish Symbols'
+  type: boolean
+  default: false
+
+- name: artifacts
+  displayName: 'Publish Artifacts'
+  type: boolean
+  default: false
+
+jobs:
+- job: CI
+  
+  steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'NuGet Install'
+    
+  - task: NuGetAuthenticate@1
+    displayName: 'NuGet Authenticate'
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet Restore'
+    inputs:
+      command: 'restore'
+      restoreSolution: '${{parameters.solution}}'
+      feedsToUse: 'config'
+
+  - task: VSBuild@1
+    displayName: 'Build'
+    inputs:
+      vsVersion: '17.0'
+      solution: '${{parameters.solution}}'
+      platform: '${{parameters.platform}}'
+      configuration: '${{parameters.configuration}}'
+
+  - ${{ if eq(parameters.symbols, true) }}:
+    - task: PublishSymbols@2
+      displayName: 'Publish Symbols'
+      inputs:
+        SearchPattern: '**/builds/**/*.pdb'
+        SymbolServerType: 'TeamServices'
+
+  - ${{ if eq(parameters.artifacts, true) }}:
+    - task: CopyFiles@2
+      displayName: 'Copy Deployment'
+      inputs:
+        sourceFolder: 'intermediate/staging'
+        contents: '**'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - publish: '$(Build.ArtifactStagingDirectory)'
+      displayName: 'Publish Artifacts'
+      artifact: drop
+

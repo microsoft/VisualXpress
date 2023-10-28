@@ -1,0 +1,9 @@
+
+pool:
+  name: 'TC Internal'
+
+stages:
+- stage: CI
+  jobs:
+  - template: templates/build.yml
+

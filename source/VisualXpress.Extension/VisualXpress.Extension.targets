@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <VxIntermediateVsixManifest>$(IntermediateOutputPath)\extension.vsixmanifest</VxIntermediateVsixManifest>
+    <VxAssemblyInfoFile>$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs</VxAssemblyInfoFile>
+  </PropertyGroup>
+  
+  <UsingTask TaskName="PreprocessVsixExtensionManifest" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+        <Version ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        string assemblyInfoFile = @"$(VxAssemblyInfoFile)";
+        string assemblyInfoText = File.ReadAllText(assemblyInfoFile);
+        Match assemblyVersionMatch = Regex.Match(assemblyInfoText, @"VisualXpressVersion\s*=\s*""(?<version>[\d\.]+)""", RegexOptions.Multiline);
+        if (assemblyVersionMatch.Success == false)
+            throw new Exception(String.Format("Failed to match VisualXpressVersion in file {0}", assemblyInfoFile));
+        Version = assemblyVersionMatch.Groups["version"].Value;
+        Log.LogMessage(MessageImportance.High, String.Format("VisualXpress Manifest Version {0}", Version));
+        string manifestFile = @"$(VxIntermediateVsixManifest)";
+        string manifestText = File.ReadAllText(manifestFile);
+        manifestText = manifestText.Replace("{{VisualXpressVersion}}", Version);
+        File.WriteAllText(manifestFile, manifestText);
+        ]]></Code>
+    </Task>
+  </UsingTask>
+  
+  <Target Name="ValidateVsixManifest">
+    <PreprocessVsixExtensionManifest>
+        <Output TaskParameter="Version" PropertyName="VxApplicationVersion" />
+    </PreprocessVsixExtensionManifest>
+  </Target>
+  
+  <Target Name="AfterBuild">
+    <PropertyGroup>
+      <VxDeployConfiguration>$([System.Text.RegularExpressions.Regex]::Replace($(Configuration), "-.*", ""))</VxDeployConfiguration>
+      <VxDeployExe>$(VisualXpressBuildDir)\VisualXpress.Deploy\$(VxDeployConfiguration)\$(Platform)\VisualXpress.Deploy.exe</VxDeployExe>
+      <VxDeployCommand>"$(VxDeployExe)" "$(TargetName)" "$(Configuration)" "$(OutputPath)" "$(VsInstallRoot)\Common7\IDE" "$(VisualXpressStagingDir)"</VxDeployCommand>
+    </PropertyGroup>
+    <Error Text="Undefined VxApplicationVersion from manifest build" Condition="'$(VxApplicationVersion)'==''"/>
+    <Message Text="$(VxDeployCommand.Replace('\','/'))" Importance="High"/>
+    <Exec Command="$(VxDeployCommand.Replace('\','/'))"/>
+  </Target>
+</Project>

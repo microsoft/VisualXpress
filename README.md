@@ -29,10 +29,10 @@ VisualXpress is a Visual Studio extension used easily integrate external tools i
 
 # Installation
 
-* VisualXpress for Visual Studio extension can be installed from running the VisualXpress vsix after building. The *deploy* folder with the private Gallery.atom feeds can be copied to a network share for team deployment and auto-updating.
+* VisualXpress for Visual Studio extension can be installed from running the VisualXpress vsix after building. The *staging* folder with the private Gallery.atom feeds can be copied to a network share for team deployment and auto-updating.
 ```
 intermediate\
-   deploy\
+   staging\
       2017\
          VisualXpress.2017.vsix
       2019\
@@ -45,27 +45,27 @@ intermediate\
 
 * Custom menus, toolbars, and commands!
 
-  ![toolbars_menus](res/toolbars_menus.png)
+  ![toolbars_menus](docs/res/toolbars_menus.png)
 	
 * Custom Right-Click context menus!
 
-  ![context_menus](res/context_menus.png)
+  ![context_menus](docs/res/context_menus.png)
 	
 * Nested menus, separators, switch perforce global configurations on the fly or use just P4CONFIG. Hot reload with "Refresh"
 
-  ![perforce_connection](res/perforce_connection.png)
+  ![perforce_connection](docs/res/perforce_connection.png)
 	
 * Fully customizable locally in XML. Add new menus, plugin commands, system commands. Both user and global settings available. Hot-reloading of new XML tool definitions!
 
-  ![settings_xml](res/settings_xml.png)
+  ![settings_xml](docs/res/settings_xml.png)
 
 * Options panel for some common settings
 
-  ![options_panel](res/options_panel.png)
+  ![options_panel](docs/res/options_panel.png)
 
 * Add and update using a private extension gallery
 
-  ![extensions_updates](res/extensions_updates.png)
+  ![extensions_updates](docs/res/extensions_updates.png)
 
 # Development
 	
@@ -73,7 +73,7 @@ intermediate\
 
 * It's easy to get started developing new features if you'd like!
 
-* You can then open VisualXpress.sln and build the project using VS 2017. Any Visual Studio Extension SDK requirements for other target version are included as Nuget package references, so you don't need VS 2019 installed to build VisualXpress compatible with 2019.
+* You can then open VisualXpress.sln and build the project using VS 2022. Any Visual Studio Extension SDK requirements for other target version are included as Nuget package references, so you don't need VS 2019 & 2017 installed to build VisualXpress compatible with 2019 & 2017.
 	
 * VisualXpress.sln has custom project configurations and a PostBuild tool which handles installation and/or deployment.
 	

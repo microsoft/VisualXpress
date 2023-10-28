@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <Import Project="$(MSBuildProjectDirectory)\..\VisualXpress.props" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{46785A04-CB27-4CB8-99A9-480236230514}</ProjectGuid>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.VisualXpress</RootNamespace>
+    <AssemblyName>VisualXpress.2017</AssemblyName>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DeployExtension>False</DeployExtension>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>$(VisualXpressBuildDir)\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;VISUALXPRESS_VS_2017</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <NoWarn>
+    </NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Install|AnyCPU'">
+    <OutputPath>$(VisualXpressBuildDir)\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;VISUALXPRESS_VS_2017</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <NoWarn>
+    </NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Update|AnyCPU'">
+    <OutputPath>$(VisualXpressBuildDir)\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS;VISUALXPRESS_VS_2017</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <NoWarn>
+    </NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>$(VisualXpressBuildDir)\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
+    <DefineConstants>TRACE;CODE_ANALYSIS;VISUALXPRESS_VS_2017</DefineConstants>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <NoWarn>
+    </NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Install|AnyCPU'">
+    <OutputPath>$(VisualXpressBuildDir)\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
+    <DefineConstants>TRACE;CODE_ANALYSIS;VISUALXPRESS_VS_2017</DefineConstants>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <NoWarn>
+    </NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Update|AnyCPU'">
+    <OutputPath>$(VisualXpressBuildDir)\$(AssemblyName)\$(Configuration)\$(Platform)\</OutputPath>
+    <BaseIntermediateOutputPath>$(OutputPath)\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)\</IntermediateOutputPath>
+    <DefineConstants>TRACE;CODE_ANALYSIS;VISUALXPRESS_VS_2017</DefineConstants>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <NoWarn>
+    </NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <Import Project="..\VisualXpress.Extension\VisualXpress.Extension.projitems" Label="Shared" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="15.0.1" ExcludeAssets="runtime">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.4.2119" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="..\VisualXpress.Extension\VisualXpress.Extension.targets" />
+</Project>
