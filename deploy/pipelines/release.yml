@@ -30,6 +30,7 @@ stages:
       esrpKeyCode: 'CP-233016'
       esrpSignOperation: 'OPCSign'
       files:
+        - '2026/VisualXpress.2026.vsix'
         - '2022/VisualXpress.2022.vsix'
         - '2019/VisualXpress.2019.vsix'
         - '2017/VisualXpress.2017.vsix'

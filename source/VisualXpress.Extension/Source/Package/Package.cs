@@ -44,10 +44,10 @@ namespace Microsoft.VisualXpress
 		private DocTableEvents m_DocTableEvents;
 		
 
-        protected override async Task InitializeAsync(System.Threading.CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+		protected override async Task InitializeAsync(System.Threading.CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
 		{
 			await base.InitializeAsync(cancellationToken, progress);
-			Log.Intitialize();
+			Log.Intitialize(this);
 			LoadUserOptions();
 			
 			Log.Verbose("VisualXpressPackage.Initialize: BEGIN");
@@ -60,7 +60,7 @@ namespace Microsoft.VisualXpress
 				IVsRunningDocumentTable vsDocTable = this.GetServiceOfType<IVsRunningDocumentTable>(typeof(IVsRunningDocumentTable));
 				m_DocTableEvents = DocTableEvents.New(vsDocTable);
 
-                LoadSolutionUserOptions();
+				LoadSolutionUserOptions();
 				RefreshInternal();
 			}
 			catch (Exception e) 
@@ -79,13 +79,13 @@ namespace Microsoft.VisualXpress
 		public IVsSolutionBuildManager2 GetSolutionBuildManager()
 		{
 			IVsSolutionBuildManager2 SolutionBuildManager = null;
-            ThreadHelper.JoinableTaskFactory.Run(async delegate {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                SolutionBuildManager = await GetServiceAsync(typeof(SVsSolutionBuildManager)) as IVsSolutionBuildManager2;
-                Assumes.Present(SolutionBuildManager);
-            });
+			ThreadHelper.JoinableTaskFactory.Run(async delegate {
+				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+				SolutionBuildManager = await GetServiceAsync(typeof(SVsSolutionBuildManager)) as IVsSolutionBuildManager2;
+				Assumes.Present(SolutionBuildManager);
+			});
 			return SolutionBuildManager;
-        }
+		}
 
 		public void Refresh()
 		{
@@ -219,20 +219,20 @@ namespace Microsoft.VisualXpress
 			return VSConstants.E_FAIL;
 		}
 
-        private void LoadSolutionUserOptions()
-        {
-            try
-            {
+		private void LoadSolutionUserOptions()
+		{
+			try
+			{
 				ThreadHelper.ThrowIfNotOnUIThread();
 				IVsSolutionPersistence vsSolutionPersistence = GetServiceOfType<IVsSolutionPersistence>(typeof(SVsSolutionPersistence));
 				IVsPersistSolutionOpts vsSolutionOps = ((object)this) as IVsPersistSolutionOpts;
 				vsSolutionPersistence.LoadPackageUserOpts(vsSolutionOps, SolutionOptionsKey);
-            }
-            catch (Exception e)
-            {
+			}
+			catch (Exception e)
+			{
 				Log.Error("LoadSolutionUserOptions failed: {0}", e.Message);
-            }
-        }
+			}
+		}
 
 		int IVsPersistSolutionOpts.SaveUserOptions(IVsSolutionPersistence vsSolutionPersistence)
 		{
@@ -666,6 +666,7 @@ namespace Microsoft.VisualXpress
 
 			CommandBarInfo[] info = new CommandBarInfo[]{
 				new CommandBarInfo { Name="Easy MDI Document Window", Context=ContextType.Document },
+				new CommandBarInfo { Name="Document Window Tab", Context=ContextType.Document },
 				new CommandBarInfo { Name="Item", Context=ContextType.Solution },
 				new CommandBarInfo { Name="Project", Context=ContextType.Solution },
 				new CommandBarInfo { Name="Solution", Context=ContextType.Solution },
@@ -888,7 +889,7 @@ namespace Microsoft.VisualXpress
 			}
 			else
 			{
-				ThreadHelper.JoinableTaskFactory.RunAsync(async delegate 
+				JoinableTaskFactory.RunAsync(async delegate 
 				{
 					await JoinableTaskFactory.SwitchToTaskPoolThreadAsync();
 					action();
@@ -1502,6 +1503,6 @@ namespace Microsoft.VisualXpress
 			m_DocTableEvents?.Dispose();
 			#pragma warning restore
 		}
-    }
+	}
 }
 

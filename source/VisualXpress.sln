@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31808.319
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VisualXpress.Extension", "VisualXpress.Extension\VisualXpress.Extension.shproj", "{153D2B43-AFAC-49BC-A635-FC604CFBAC84}"
 EndProject
@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualXpress.2026", "VisualXpress.2026\VisualXpress.2026.csproj", "{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +104,18 @@ Global
 		{46785A04-CB27-4CB8-99A9-480236230514}.Release-Install|Any CPU.Build.0 = Release-Install|Any CPU
 		{46785A04-CB27-4CB8-99A9-480236230514}.Release-Update|Any CPU.ActiveCfg = Release-Update|Any CPU
 		{46785A04-CB27-4CB8-99A9-480236230514}.Release-Update|Any CPU.Build.0 = Release-Update|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Debug-Install|Any CPU.ActiveCfg = Debug-Install|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Debug-Install|Any CPU.Build.0 = Debug-Install|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Debug-Update|Any CPU.ActiveCfg = Debug-Update|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Debug-Update|Any CPU.Build.0 = Debug-Update|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Release-Install|Any CPU.ActiveCfg = Release-Install|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Release-Install|Any CPU.Build.0 = Release-Install|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Release-Update|Any CPU.ActiveCfg = Release-Update|Any CPU
+		{BE32A80A-C6C8-3A0A-5391-CC8F082A0762}.Release-Update|Any CPU.Build.0 = Release-Update|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +127,7 @@ Global
 		VisualXpress.Extension\VisualXpress.Extension.projitems*{153d2b43-afac-49bc-a635-fc604cfbac84}*SharedItemsImports = 13
 		VisualXpress.Extension\VisualXpress.Extension.projitems*{46785a04-cb27-4cb8-99a9-480236230514}*SharedItemsImports = 4
 		VisualXpress.Extension\VisualXpress.Extension.projitems*{70ccf7c0-0973-4d13-81e6-10628d8dca97}*SharedItemsImports = 4
+		VisualXpress.Extension\VisualXpress.Extension.projitems*{be32a80a-c6c8-3a0a-5391-cc8f082a0762}*SharedItemsImports = 4
 		VisualXpress.Extension\VisualXpress.Extension.projitems*{dc5a3bb5-874d-4a6d-bd9a-825392eb4e62}*SharedItemsImports = 4
 		VisualXpress.Extension\VisualXpress.Extension.projitems*{f8030278-777e-4558-a21c-000ed5f56fc2}*SharedItemsImports = 4
 	EndGlobalSection

@@ -41,8 +41,6 @@
         <PluginCommand Title="Perforce - History in UE5/Main" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
         <PluginCommand Title="Perforce - Revision Graph in UE5/Main" Name="revgraph" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" "$(ItemPath)"' Image="revgraph.png" SaveAllDocs="true"/>
         <PluginCommand Title="Perforce - Timelapse in UE5/Main" Name="timelapse" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Main/Engine/" "$(ItemPath)"' Image="timelapse.png" SaveAllDocs="true"/>
-        <Separator/>
-        <PluginCommand Title="Perforce - Reconcile: UE5" Name="reconcile" Arguments="$(UnrealReconcilePaths)" Image="reconcile.png" SaveAllDocs="true"/>
       </SubMenu>
       <Separator/>
       <SubMenu Title="UE5-Release-5.2">
@@ -51,8 +49,6 @@
         <PluginCommand Title="Perforce - History in UE5/Release-5.2" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.2/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
         <PluginCommand Title="Perforce - Revision Graph in UE5/Release-5.2" Name="revgraph" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.2/Engine/" "$(ItemPath)"' Image="revgraph.png" SaveAllDocs="true"/>
         <PluginCommand Title="Perforce - Timelapse in UE5/Release-5.2" Name="timelapse" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.2/Engine/" "$(ItemPath)"' Image="timelapse.png" SaveAllDocs="true"/>
-        <Separator/>
-        <PluginCommand Title="Perforce - Reconcile: UE5-Release-5.2" Name="reconcile" Arguments="$(UnrealReconcilePaths)" Image="reconcile.png" SaveAllDocs="true"/>
       </SubMenu>
       <SubMenu Title="UE5-Release-5.3">
         <PluginCommand Title="Perforce - Diff vs UE5/Release-5.3" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE5/Release-5.3/Engine/" -branch visualxpress_to_ue5_release_5.3 "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
@@ -60,9 +56,23 @@
         <PluginCommand Title="Perforce - History in UE5/Release-5.3" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.3/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
         <PluginCommand Title="Perforce - Revision Graph in UE5/Release-5.3" Name="revgraph" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.3/Engine/" "$(ItemPath)"' Image="revgraph.png" SaveAllDocs="true"/>
         <PluginCommand Title="Perforce - Timelapse in UE5/Release-5.3" Name="timelapse" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.3/Engine/" "$(ItemPath)"' Image="timelapse.png" SaveAllDocs="true"/>
-        <Separator/>
-        <PluginCommand Title="Perforce - Reconcile: UE5-Release-5.3" Name="reconcile" Arguments="$(UnrealReconcilePaths)" Image="reconcile.png" SaveAllDocs="true"/>
       </SubMenu>
+      <SubMenu Title="UE5-Release-5.4">
+        <PluginCommand Title="Perforce - Diff vs UE5/Release-5.4" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE5/Release-5.4/Engine/" -branch visualxpress_to_ue5_release_5.4 "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
+        <Separator/>
+        <PluginCommand Title="Perforce - History in UE5/Release-5.4" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.4/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
+        <PluginCommand Title="Perforce - Revision Graph in UE5/Release-5.4" Name="revgraph" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.4/Engine/" "$(ItemPath)"' Image="revgraph.png" SaveAllDocs="true"/>
+        <PluginCommand Title="Perforce - Timelapse in UE5/Release-5.4" Name="timelapse" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.4/Engine/" "$(ItemPath)"' Image="timelapse.png" SaveAllDocs="true"/>
+      </SubMenu>
+      <SubMenu Title="UE5-Release-5.5">
+        <PluginCommand Title="Perforce - Diff vs UE5/Release-5.5" Name="compare" Arguments='-lr -search "^//.+?/Engine/" -replace "//UE5/Release-5.5/Engine/" -branch visualxpress_to_ue5_release_5.5 "$(ItemPath)"' Image="compare.png" SaveAllDocs="true"/>
+        <Separator/>
+        <PluginCommand Title="Perforce - History in UE5/Release-5.5" Name="history" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.5/Engine/" "$(ItemPath)"' Image="history.png" SaveAllDocs="true"/>
+        <PluginCommand Title="Perforce - Revision Graph in UE5/Release-5.5" Name="revgraph" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.5/Engine/" "$(ItemPath)"' Image="revgraph.png" SaveAllDocs="true"/>
+        <PluginCommand Title="Perforce - Timelapse in UE5/Release-5.5" Name="timelapse" Arguments='-search "^//.+?/Engine/" -replace "//UE5/Release-5.5/Engine/" "$(ItemPath)"' Image="timelapse.png" SaveAllDocs="true"/>
+      </SubMenu>
+      <Separator/>
+      <PluginCommand Title="Perforce - Reconcile: UE5" Name="reconcile" Arguments="$(UnrealReconcilePaths)" Image="reconcile.png" SaveAllDocs="true"/>
     </SubMenu>
     <Separator/>
     <PluginCommand Title="Perforce - Connection" Name="connection"/>

@@ -278,9 +278,15 @@ namespace Microsoft.VisualXpress
 	public sealed class ProcessSettingsStore : IVsSettingsStore
 	{
 		private XPathDocument m_Document;
+		private bool m_Initialized;
 
-		public ProcessSettingsStore()
+		public void EnsureInitialized()
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+			if (m_Initialized)
+				return;
+
+			m_Initialized = true;
 			try
 			{
 				using (TempFile file = new TempFile())
@@ -324,6 +330,9 @@ namespace Microsoft.VisualXpress
 
 		private XPathNavigator FindProperty(string collectionPath, string propertyName)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
+			EnsureInitialized();
+
 			if (m_Document != null && String.IsNullOrEmpty(collectionPath) == false && String.IsNullOrEmpty(propertyName) == false)
 			{
 				string[] categoryNames = collectionPath.Split('\\','/');
@@ -336,6 +345,7 @@ namespace Microsoft.VisualXpress
 
 		private int GetValue<ValueType>(string collectionPath, string propertyName, out ValueType value)
 		{
+			ThreadHelper.ThrowIfNotOnUIThread();
 			value = default(ValueType);
 			XPathNavigator prop = FindProperty(collectionPath, propertyName);
 			if (prop != null)
@@ -358,12 +368,14 @@ namespace Microsoft.VisualXpress
 
 		int IVsSettingsStore.PropertyExists(string collectionPath, string propertyName, out int pfExists) 
 		{ 
+			ThreadHelper.ThrowIfNotOnUIThread();
 			pfExists = FindProperty(collectionPath, propertyName) == null ? 0 : 1;
 			return VSConstants.S_OK;
 		}
 
 		int IVsSettingsStore.GetPropertyType(string collectionPath, string propertyName, out uint type) 
 		{ 
+			ThreadHelper.ThrowIfNotOnUIThread();
 			if (FindProperty(collectionPath, propertyName) != null)
 			{
 				type = (uint)VisualStudio.Settings.SettingsType.String;

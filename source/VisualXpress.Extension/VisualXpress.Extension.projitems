@@ -26,6 +26,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Source\Package\LatentAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\Package\Properties.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\Package\QueryUser.xaml.cs">
+      <DependentUpon>QueryUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Source\Package\SettingsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\Package\SolutionOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)source\package\Telemetry.cs" />
@@ -100,6 +103,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Key.snk" />
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Install.bat" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Publish-RC.bat" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Publish.bat" />
     <None Include="$(MSBuildThisFileDirectory)Scripts\Uninstall.bat" />
@@ -156,6 +160,10 @@
     <Page Include="$(MSBuildThisFileDirectory)Source\Package\EnvironmentWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Source\Package\QueryUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Source\Package\UserOptionsControl.xaml">
       <SubType>Designer</SubType>
