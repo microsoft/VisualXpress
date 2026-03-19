@@ -49,7 +49,7 @@ namespace Microsoft.VisualXpress.Deploy
 
 				if (DoUpdate)
 				{
-					var vsVersions = new Dictionary<string,string>(){{"2017","15.0"}, {"2019","16.0"}, {"2022","17.0"}};
+					var vsVersions = new Dictionary<string,string>(){{"2017","15.0"}, {"2019","16.0"}, {"2022","17.0"}, {"2026","18.0"}};
 					if (vsVersions.TryGetValue(vsVersionYear, out string vsVersion) == false)
 						throw new Exception(String.Format("Failed to get vsVersion for target: {0}", targetName));
 						

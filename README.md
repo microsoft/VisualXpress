@@ -9,7 +9,7 @@ VisualXpress is a Visual Studio extension used easily integrate external tools i
 * Custom plugin implemented tools in addition to external system applications
 * Completely temporary VS commands that will not exist after package uninstall
 * Hot-reload VisualXpress updates to Visual Studio! (no restarts)
-* Extension compatible with VS 2017, 2019, 2022
+* Extension compatible with VS 2017, 2019, 2022, 2026
 * Define keyboard shortcuts to any of the commands from the XML
 		
 # Perforce integration commands
@@ -39,6 +39,8 @@ intermediate\
          VisualXpress.2019.vsix
       2022\
          VisualXpress.2022.vsix
+      2026\
+         VisualXpress.2026.vsix
 ```		
 
 # Screenshots

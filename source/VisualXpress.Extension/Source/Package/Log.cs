@@ -135,7 +135,7 @@ namespace Microsoft.VisualXpress
 					bar.FreezeOutput(1);
 					m_UnfreezeAction = new LatentAction(TextFreezeTimeoutMs, (context) => 
 					{
-						ThreadHelper.JoinableTaskFactory.RunAsync(async delegate {
+						Log.Package.JoinableTaskFactory.RunAsync(async delegate {
 							await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 							bar.FreezeOutput(0);
 						}).FileAndForget(Telemetry.EventFaultName("LogDeviceStatusBar.WriteDevice"));
@@ -149,10 +149,12 @@ namespace Microsoft.VisualXpress
 	{
 		private static Log m_Instance;
 		private List<ILogDevice> m_Devices;
+		private Package m_Package;
 
-		private Log()
+		private Log(Package package)
 		{
 			m_Devices = new List<ILogDevice>();
+			m_Package = package;
 
 			AddDevice(new LogDeviceConsole());
 			AddDevice(new LogDeviceFile(String.Format("{0}\\Log\\{1:yyyy-MM-dd}\\VisualXpress-{1:HH-mm-ss}.txt", Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), DateTime.Now)));
@@ -161,15 +163,20 @@ namespace Microsoft.VisualXpress
 			AddDevice(new LogDeviceStatusBar());
 		}
 
-		public static void Intitialize()
+		public static void Intitialize(Package package)
 		{
 			if (m_Instance == null)
-				m_Instance = new Log();
+				m_Instance = new Log(package);
 		}
 
 		public static Log Instance
 		{
 			get { return m_Instance; }
+		}
+
+		public static Package Package
+		{
+			get { return Instance.m_Package; }
 		}
 
 		public static Dispatcher Dispatcher
@@ -244,7 +251,7 @@ namespace Microsoft.VisualXpress
 		{
 			try
 			{
-				ThreadHelper.JoinableTaskFactory.RunAsync(async delegate {
+				Package.JoinableTaskFactory.RunAsync(async delegate {
 					await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 					Log.Instance.WriteLineInternal(channel, text);
 				}).FileAndForget(Telemetry.EventFaultName("Log.WriteLine"));

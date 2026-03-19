@@ -1,5 +1,11 @@
 VisualXpress Release Notes
 
+[Version 2.14.2.0]
+* Fixing missing context menu items on document tab menu for VS 2026
+
+[Version 2.14.0.0]
+* Added support for Visual Studio 2026
+
 [Version 2.12.6.0]
 * Fixing possible block of main thread while execution VisualXpress commands
   that are not intended to be waited on.

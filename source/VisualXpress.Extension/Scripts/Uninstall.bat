@@ -1,12 +1,11 @@
 @ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
 
+SET VSWHERE_EXE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe
 SET VSIXINSTALLER_EXE=
-FOR %%V IN (17.0 16.0 15.0 14.0 12.0) DO (
-	FOR /F "tokens=2*" %%A IN ('reg query HKLM\Software\Wow6432Node\Microsoft\VisualStudio\SxS\VS7 /v %%V ^| FIND "REG_SZ"') DO (
-		SET VSIXINSTALLER_EXE=%%B\Common7\IDE\VSIXInstaller.exe
-		IF EXIST "!VSIXINSTALLER_EXE!" GOTO :FOUND_VSIXINSTALLER
-	)
+FOR /F "tokens=*" %%A IN ('"%VSWHERE_EXE%" -sort -property InstallationPath') DO (
+	SET VSIXINSTALLER_EXE=%%A\Common7\IDE\VSIXInstaller.exe
+	IF EXIST "!VSIXINSTALLER_EXE!" GOTO :FOUND_VSIXINSTALLER
 )
 ECHO Failed to find VSIXInstaller.exe
 PAUSE

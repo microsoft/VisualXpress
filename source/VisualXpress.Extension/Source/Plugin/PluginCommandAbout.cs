@@ -13,7 +13,7 @@ namespace Microsoft.VisualXpress
 	{
 		public override bool Execute(PluginCommandOptions options)
 		{
-			ThreadHelper.JoinableTaskFactory.RunAsync(async delegate
+			Package.JoinableTaskFactory.RunAsync(async delegate
 			{
 				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 				var window = new AboutWindow() { Topmost = true };

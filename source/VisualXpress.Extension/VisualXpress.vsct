@@ -17,8 +17,6 @@
   <Extern href="stdidcmd.h" />
   <Extern href="vsshlids.h" />
 
-
-
   <Commands package="guidVisualXpressPkg">
 
     <Menus>
